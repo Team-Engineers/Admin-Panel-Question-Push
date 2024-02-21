@@ -167,14 +167,20 @@ const QuestionForm = () => {
         await Promise.all(anArray.map(handleImageUpload))
             .then(async () => {
                 const updatedEntranceExam = entranceExamNames;
-                if(formData.questionTextAndImages.length > 0 && formData.questionTextAndImages[0]?.text)
-                    formData.questionTextAndImages[0].text = formData.questionTextAndImages[0].text.split('\n');
+                if(formData.questionTextAndImages.length > 0 && formData.questionTextAndImages[0]?.text) {
+                    if (formData.questionTextAndImages[0].text.includes('\n')) {
+                        formData.questionTextAndImages[0].text = formData.questionTextAndImages[0].text.split('\n');
+                    }
+                }
 
                 formData.subQuestions.map((question)=>{
-                    // console.log("cjecing ", question, question.questionTextAndImages);
-                    question.questionTextAndImages[0].text = question.questionTextAndImages[0].text.split('\n');
-                    question.explanation[0].text = question.explanation[0].text.split('\n');
-                    // return [];
+                    if (question.questionTextAndImages[0].text.includes('\n')) {
+                        question.questionTextAndImages[0].text = question.questionTextAndImages[0].text.split('\n');
+                    }
+                    
+                    if (question.explanation[0].text.includes('\n')) {
+                        question.explanation[0].text = question.explanation[0].text.split('\n');
+                    }
                 })
 
                 console.log("checing form dat", formData);
