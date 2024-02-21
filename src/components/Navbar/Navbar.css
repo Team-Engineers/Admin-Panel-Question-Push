@@ -1,0 +1,33 @@
+.navbar
+{
+    height: 3.5rem;
+    background-color: bisque;
+    display: flex;
+    align-items: center;
+    padding: 2rem 2rem;
+}
+
+.navbar ul
+{    
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    gap: 1rem;
+}
+
+.navbar ul li
+{    
+    list-style: none;
+    cursor: pointer;
+    padding: 0.2rem 0.5rem;
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.underline
+{
+    height: 2px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.345);
+}
