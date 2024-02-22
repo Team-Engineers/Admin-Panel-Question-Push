@@ -11,7 +11,6 @@ function App() {
         <Route exact path="/" element={<HomePage />} />
         <Route exact path="/new-question" element={<NewQuestionPage />} />
         <Route exact path="/all-question" element={<AllQuestion />} />
-
       </Routes>
     </>
   );
