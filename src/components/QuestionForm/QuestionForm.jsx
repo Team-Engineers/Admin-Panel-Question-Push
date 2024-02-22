@@ -200,7 +200,7 @@ const QuestionForm = () => {
 
                 if (addedNewQuestion.success) {
                     alert(addedNewQuestion.msg);
-                    window.location.reload();
+                    // window.location.reload();
                 }
 
 
