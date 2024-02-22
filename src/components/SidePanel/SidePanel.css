@@ -1,12 +1,14 @@
 .sidePanel {
   width: 20%;
-  height: 100%;
+  height: 95%;
   background-color: pink;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1rem 0;
   gap: 2rem;
+  position: fixed;
+  margin-top: 3.5rem;
 }
 
 .addSection {
@@ -25,6 +27,7 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  padding: 0px;
 }
 
 .mocktestListSection li {

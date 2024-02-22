@@ -16,7 +16,9 @@ export const GeneralContextProvider = ({ children }) => {
   const [difficulty, setDifficulty] = useState([]);
   const [topic, setTopic] = useState([]);
   const [subtopic, setSubtopic] = useState([]);
+  const [currentTopic,setCurrentTopic] = useState('');
   const [entranceExams, setEntranceExams] = useState([]);
+  const [otherQuestions, setOtherQuestions] = useState([]);
 
   const fetchAllMocktests = async () => {
     const allMocktest = await fetch(`${API}/mocktest/get-all-mocktests`, {
@@ -78,6 +80,10 @@ export const GeneralContextProvider = ({ children }) => {
         setMocktestName,
         isMocktestMenu,
         setIsMocktestMenu,
+        setOtherQuestions,
+        otherQuestions,
+        setCurrentTopic,
+        currentTopic,
       }}
     >
       {children}

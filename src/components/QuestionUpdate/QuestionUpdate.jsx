@@ -5,6 +5,7 @@ import { storage } from "../../config/firebaseConfig";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
+import { Modal, Box, Typography, Button } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Select from "@mui/material/Select";
@@ -16,30 +17,14 @@ import slugify from "slugify";
 import { API } from "../../utils/constant";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const QuestionUpdate = () => {
-  const { id } = useParams;
+  const { id } = useParams();
   const generalContext = useContext(GeneralContext);
 
   const [entranceExamNames, setEntranceExamNames] = useState([]);
   const [isSubquestion, setIsSubquestion] = useState(false);
-
-  const changeIsSubquestion = (event) => {
-    setIsSubquestion(!isSubquestion);
-  };
-
-  useEffect(() => {
-    const fetchData = async() => {
-      try {
-        const response = await axios.get(`${API}/questions/${id}`);
-        console.log("response of singlge", response);
-      } catch (error) {
-        console.log("error", error);
-      }
-    };
-
-    fetchData();
-  }, [id]);
 
   // Version 2
   const [formData, setFormData] = useState({
@@ -60,6 +45,36 @@ const QuestionUpdate = () => {
       },
     ],
   });
+  const [showModal, setShowModal] = useState(false);
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+
+  const changeIsSubquestion = (event) => {
+    setIsSubquestion(!isSubquestion);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const params = {
+        _id: id,
+      };
+      try {
+        const response = await axios.get(`${API}/question/find-questions`, {
+          params: params,
+        });
+        // console.log("response of singlge", response.data.requestedData);
+        setFormData(response.data.requestedData[0]);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
+  generalContext.setCurrentTopic(formData?.topic);
+
 
   const handleChange = (e, index, fieldName, subFieldName, subIndex) => {
     const { name, value, files } = e.target;
@@ -222,9 +237,9 @@ const QuestionUpdate = () => {
 
         let url = generalContext.mocktestId.length
           ? `${API}/mocktest/add-question`
-          : `${API}/question/create-question`;
+          : `${API}/question/update-question`;
         const newQuestion = await fetch(url, {
-          method: generalContext.mocktestId.length ? "PATCH" : "POST",
+          method: generalContext.mocktestId.length ? "PATCH" : "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(updatedFormData),
         });
@@ -232,23 +247,39 @@ const QuestionUpdate = () => {
         const addedNewQuestion = await newQuestion.json();
 
         if (addedNewQuestion.success) {
-          alert(addedNewQuestion.msg);
+          // alert(addedNewQuestion.msg);
+          toast.success("Question Updated Successfully");
           window.location.reload();
         }
       })
       .catch((error) => console.log(error));
   };
 
+  const handleDelete = async () => {
+    try {
+      // await axios.delete(`${API}/question/delete-question`);
+      toast.success("Item deleted successfully!");
+    } catch (error) {
+      console.log("error", error);
+      toast.error("Error in deleting!");
+    }
+    toggleModal();
+  };
+
   return (
     // Version 2
-    <div className="questionContainer">
+    <div className="questionContainer m-0">
+      <ToastContainer />
       {generalContext.mocktestId.length ? (
         <h2>Add New Question in {generalContext.mocktestName}</h2>
       ) : (
-        <h2>Create New Question</h2>
+        <h2>Update Question</h2>
       )}
 
-      <div style={{ width: "100%" }}>
+      <div
+        className="d-flex justify-content-between align-items-center"
+        style={{ width: "100%" }}
+      >
         <FormControl>
           <FormLabel id="demo-controlled-radio-buttons-group">
             Does Question have further subquestions ?
@@ -264,6 +295,9 @@ const QuestionUpdate = () => {
             <FormControlLabel value={false} control={<Radio />} label="No" />
           </RadioGroup>
         </FormControl>
+        <div className="btn btn-danger" onClick={toggleModal}>
+         Delete
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="questionForm">
@@ -395,7 +429,7 @@ const QuestionUpdate = () => {
           </h3>
 
           <div>
-            {formData.subQuestions.map((subQuestion, index) => (
+            {formData?.subQuestions?.map((subQuestion, index) => (
               <div key={index} className="subQuestion">
                 {isSubquestion && <h4>Sub Question {index + 1}</h4>}
 
@@ -645,6 +679,49 @@ const QuestionUpdate = () => {
           Reset Form
         </button>
       </form>
+      <Modal
+        open={showModal}
+        onClose={toggleModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Confirm Delete
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Are you sure you want to delete?
+          </Typography>
+          <Button
+            onClick={handleDelete}
+            variant="contained"
+            color="primary"
+            sx={{ mr: 2, mt: 2 }}
+          >
+            Yes
+          </Button>
+          <Button
+            onClick={toggleModal}
+            variant="contained"
+            color="secondary"
+            sx={{ mt: 2 }}
+          >
+            No
+          </Button>
+        </Box>
+      </Modal>
     </div>
   );
 };

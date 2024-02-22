@@ -5,7 +5,7 @@ import TopicWiseQuestion from "../../components/TopicWiseQuestion/TopicWiseQuest
 const AllQuestion = () => {
 
   return (
-    <div className="containerWrapper">
+    <div className="containerWrapper mt-5">
       <Navbar />
       <TopicWiseQuestion/>
     </div>

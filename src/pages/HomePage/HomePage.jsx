@@ -16,7 +16,7 @@ const HomePage = () => {
       <div className="subContainer">
         <SidePanel />
 
-        <div className="formContainer">
+        <div className="formContainer" style={{ marginLeft: "20%" }}>
           {generalContext.isMocktestForm ? <MocktestForm /> : <QuestionFrom />}
         </div>
       </div>
