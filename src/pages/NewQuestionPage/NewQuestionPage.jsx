@@ -5,7 +5,7 @@ import QuestionPreview from "../../components/QuestionPreview/QuestionPreview";
 
 const NewQuestionPage = () => {
   return (
-    <div className="containerWrapper">
+    <div className="containerWrapper overflow-hidden">
       <Navbar />
 
       <div className="container-fluid mt-3">
