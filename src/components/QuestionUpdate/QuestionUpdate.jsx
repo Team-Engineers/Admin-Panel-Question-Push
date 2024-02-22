@@ -74,7 +74,7 @@ const QuestionUpdate = () => {
   }, [id]);
 
   generalContext.setCurrentTopic(formData?.topic);
-
+  generalContext.setPreviewData(formData);
 
   const handleChange = (e, index, fieldName, subFieldName, subIndex) => {
     const { name, value, files } = e.target;
@@ -296,7 +296,7 @@ const QuestionUpdate = () => {
           </RadioGroup>
         </FormControl>
         <div className="btn btn-danger" onClick={toggleModal}>
-         Delete
+          Delete
         </div>
       </div>
 
@@ -320,7 +320,6 @@ const QuestionUpdate = () => {
               </Select>
             </FormControl>
           </div>
-
           <div className="input-form">
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Sub Topic</InputLabel>
@@ -438,7 +437,7 @@ const QuestionUpdate = () => {
                                       <input className = 'textInput' type="text" name="difficulty" value={subQuestion.difficulty} onChange={(e) => handleChange(e, index, 'subQuestions','difficulty')} />
                                   </div> */}
 
-                <div id="question-details">
+                <div id="question-details flex-grow">
                   <div className="input-form">
                     <FormControl fullWidth>
                       <InputLabel id="demo-simple-select-label">

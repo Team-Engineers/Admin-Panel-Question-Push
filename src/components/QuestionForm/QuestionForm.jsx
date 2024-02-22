@@ -104,6 +104,9 @@ const QuestionForm = () => {
     setFormData({ ...formData, subQuestions: newSubQuestions });
   };
 
+  generalContext.setPreviewData(formData);
+
+
   const handleAddQuestionTextAndImages = (index) => {
     handleAddField("subQuestions", index, "questionTextAndImages");
   };
@@ -252,7 +255,7 @@ const QuestionForm = () => {
 
       <form onSubmit={handleSubmit} className="questionForm">
         <div id="question-details">
-          <div className="input-form">
+          <div className="input-form ">
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Topic</InputLabel>
               <Select
@@ -383,12 +386,7 @@ const QuestionForm = () => {
               <div key={index} className="subQuestion">
                 {isSubquestion && <h4>Sub Question {index + 1}</h4>}
 
-                {/* <div>
-                                    <label>Difficulty:</label>
-                                    <input className = 'textInput' type="text" name="difficulty" value={subQuestion.difficulty} onChange={(e) => handleChange(e, index, 'subQuestions','difficulty')} />
-                                </div> */}
-
-                <div id="question-details">
+                <div id="question-details flex-grow">
                   <div className="input-form">
                     <FormControl fullWidth>
                       <InputLabel id="demo-simple-select-label">

@@ -19,11 +19,10 @@ import slugify from "slugify";
 import { useNavigate } from "react-router-dom";
 const TopicWiseQuestion = () => {
   const navigate = useNavigate();
-
   const generalContext = useContext(GeneralContext);
   const [questionData, setQuestionData] = useState(null);
-  const [topic, setTopic] = useState('');
-  const [subTopic, setSubTopic] = useState('');
+  const [topic, setTopic] = useState("");
+  const [subTopic, setSubTopic] = useState("");
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => {
@@ -54,7 +53,7 @@ const TopicWiseQuestion = () => {
       });
       console.log("response", response.data.requestedData);
       setQuestionData(response.data.requestedData);
-      generalContext.setOtherQuestions(response.data.requestedData)
+      generalContext.setOtherQuestions(response.data.requestedData);
     } catch (error) {
       console.log("error", error);
     }

@@ -19,6 +19,24 @@ export const GeneralContextProvider = ({ children }) => {
   const [currentTopic,setCurrentTopic] = useState('');
   const [entranceExams, setEntranceExams] = useState([]);
   const [otherQuestions, setOtherQuestions] = useState([]);
+  const [previewData, setPreviewData] = useState({
+    questionTextAndImages: [{ text: "", image: "" }],
+    difficulty: "",
+    topic: "",
+    subTopic: "",
+    entranceExam: [],
+    subQuestions: [
+      {
+        questionTextAndImages: [{ text: "", image: "" }],
+        options: [{ text: "", image: "" }],
+        correctOptionIndex: "",
+        explanation: [{ text: "", image: "" }],
+        difficulty: "",
+        positiveMarks: "",
+        negativeMarks: "",
+      },
+    ],
+  });
 
   const fetchAllMocktests = async () => {
     const allMocktest = await fetch(`${API}/mocktest/get-all-mocktests`, {
@@ -84,6 +102,8 @@ export const GeneralContextProvider = ({ children }) => {
         otherQuestions,
         setCurrentTopic,
         currentTopic,
+        setPreviewData,
+        previewData
       }}
     >
       {children}

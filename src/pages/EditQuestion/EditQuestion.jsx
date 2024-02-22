@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import QuestionUpdate from "../../components/QuestionUpdate/QuestionUpdate";
 import SidePanel from "../../components/SidePanel/SidePanel";
+import QuestionPreview from "../../components/QuestionPreview/QuestionPreview";
 
 const EditQuestion = () => {
   return (
@@ -11,8 +12,17 @@ const EditQuestion = () => {
       <div className="subContainer">
         <SidePanel />
 
-        <div className="formContainer mt-3" style={{marginLeft:"20%"}}>
-          <QuestionUpdate />
+        <div className="formContainer mt-3" style={{ marginLeft: "20%" }}>
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-md-7">
+                <QuestionUpdate />
+              </div>
+              <div className="col-md-5">
+                <QuestionPreview />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
