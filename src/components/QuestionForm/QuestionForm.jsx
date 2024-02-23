@@ -220,7 +220,7 @@ const QuestionForm = () => {
 
         if (addedNewQuestion.success) {
           alert(addedNewQuestion.msg);
-          window.location.reload();
+        //   window.location.reload();
         }
       })
       .catch((error) => console.log(error));
