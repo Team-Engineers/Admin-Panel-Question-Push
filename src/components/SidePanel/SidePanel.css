@@ -1,43 +1,46 @@
-.sidePanel {
-  width: 20%;
-  height: 95%;
-  background-color: pink;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem 0;
-  gap: 2rem;
-  position: fixed;
-  margin-top: 3.5rem;
+.sidePanel
+{
+    width: 20%;
+    height: 100%;
+    background-color: pink;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+    gap: 2rem;
 }
 
-.addSection {
-  display: flex;
-  justify-content: center;
-  width: 80%;
-  align-items: center;
-  background-color: white;
-  padding: 0.5rem 1rem;
-  gap: 0.2rem;
+.addSection
+{
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    align-items: center;
+    background-color: white;
+    padding: 0.5rem 1rem;
+    gap: 0.2rem;
 }
 
-.mocktestListSection {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding: 0px;
+.mocktestListSection
+{    
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
-.mocktestListSection li {
-  list-style: none;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
+.mocktestListSection li
+{    
+    list-style: none;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
 }
 
-.mocktestListSection li span {
-  display: inline-flex;
-  align-items: center;
+.mocktestListSection li span
+{  
+    display: inline-flex;
+    align-items: center;
 }
+
