@@ -179,9 +179,9 @@ const QuestionForm = () => {
 
         let url = generalContext.mocktestId.length
           ? `${API}/mocktest/add-question`
-          : `${API}/question/update-question`;
+          : `${API}/question/create-question`;
         const newQuestion = await fetch(url, {
-          method: generalContext.mocktestId.length ? "PATCH" : "PUT",
+          method: generalContext.mocktestId.length ? "PATCH" : "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(updatedFormData),
         });
