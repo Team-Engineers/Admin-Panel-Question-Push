@@ -63,13 +63,13 @@ const QuestionUpdate = () => {
         const response = await axios.get(`${API}/question/find-questions`, {
           params: params,
         });
+
         // console.log("response of singlge", response.data.requestedData);
         setFormData(response.data.requestedData[0]);
       } catch (error) {
         console.log("error", error);
       }
     };
-
     fetchData();
   }, [id]);
 
@@ -198,35 +198,6 @@ const QuestionUpdate = () => {
     await Promise.all(anArray.map(handleImageUpload))
       .then(async () => {
         const updatedEntranceExam = entranceExamNames;
-        if (
-          formData.questionTextAndImages.length > 0 &&
-          formData.questionTextAndImages[0]?.text
-        ) {
-          if (formData.questionTextAndImages[0].text.includes("\n")) {
-            formData.questionTextAndImages[0].text = formData.questionTextAndImages[0].text.split(
-              "\n"
-            );
-          }
-        }
-
-        formData.subQuestions.map((question) => {
-          if (question.questionTextAndImages[0].text.includes("\n")) {
-            question.questionTextAndImages[0].text = question.questionTextAndImages[0].text.split(
-              "\n"
-            );
-          }
-
-          if (question.explanation[0].text.includes("\n")) {
-            question.explanation[0].text = question.explanation[0].text.split(
-              "\n"
-            );
-          }
-
-          return question;
-        });
-
-        console.log("checing form dat", formData);
-
         const updatedFormData = generalContext.mocktestId.length
           ? {
               ...formData,
@@ -249,7 +220,7 @@ const QuestionUpdate = () => {
         if (addedNewQuestion.success) {
           // alert(addedNewQuestion.msg);
           toast.success("Question Updated Successfully");
-          window.location.reload();
+          // window.location.reload();
         }
       })
       .catch((error) => console.log(error));

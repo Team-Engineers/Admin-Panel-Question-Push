@@ -20,11 +20,15 @@ const QuestionPreview = () => {
                       text={item.text}
                       textTag="h6"
                     />
-                    <img
-                      className="question-image"
-                      src={item.image}
-                      alt={`Img ${index + 1}`}
-                    />
+                    {item.image ? (
+                      <img
+                        className="question-image"
+                        src={item.image}
+                        alt={`Img ${index + 1}`}
+                      />
+                    ) : (
+                      ""
+                    )}
                   </div>
                 )
               )}
@@ -68,11 +72,15 @@ const QuestionPreview = () => {
                           text={item.text}
                           textTag="h6"
                         />
-                        <img
-                          className="question-image"
-                          src={item.image}
-                          alt={`Img ${idx + 1}`}
-                        />
+                        {item.image ? (
+                          <img
+                            className="question-image"
+                            src={item.image}
+                            alt={`Img ${index + 1}`}
+                          />
+                        ) : (
+                          ""
+                        )}
                       </div>
                     ))}
                   </div>
@@ -90,11 +98,15 @@ const QuestionPreview = () => {
                             text={item.text}
                             textTag="h6"
                           />
-                          <img
-                            className="question-image"
-                            src={item.image}
-                            alt={`Img ${idx + 1}`}
-                          />
+                          {item.image ? (
+                            <img
+                              className="question-image"
+                              src={item.image}
+                              alt={`Img ${index + 1}`}
+                            />
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </div>
                     ))}
@@ -110,11 +122,15 @@ const QuestionPreview = () => {
                             text={item.text}
                             textTag="h6"
                           />
-                          <img
-                            className="question-image"
-                            src={item.image}
-                            alt={`Img ${idx + 1}`}
-                          />
+                          {item.image ? (
+                            <img
+                              className="question-image"
+                              src={item.image}
+                              alt={`Img ${index + 1}`}
+                            />
+                          ) : (
+                            ""
+                          )}
                         </div>
                       ))}
                     </div>

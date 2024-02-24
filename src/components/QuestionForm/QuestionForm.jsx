@@ -106,7 +106,6 @@ const QuestionForm = () => {
 
   generalContext.setPreviewData(formData);
 
-
   const handleAddQuestionTextAndImages = (index) => {
     handleAddField("subQuestions", index, "questionTextAndImages");
   };
@@ -170,35 +169,6 @@ const QuestionForm = () => {
     await Promise.all(anArray.map(handleImageUpload))
       .then(async () => {
         const updatedEntranceExam = entranceExamNames;
-        if (
-          formData.questionTextAndImages.length > 0 &&
-          formData.questionTextAndImages[0]?.text
-        ) {
-          if (formData.questionTextAndImages[0].text.includes("\n")) {
-            formData.questionTextAndImages[0].text = formData.questionTextAndImages[0].text.split(
-              "\n"
-            );
-          }
-        }
-
-        formData.subQuestions.map((question) => {
-          if (question.questionTextAndImages[0].text.includes("\n")) {
-            question.questionTextAndImages[0].text = question.questionTextAndImages[0].text.split(
-              "\n"
-            );
-          }
-
-          if (question.explanation[0].text.includes("\n")) {
-            question.explanation[0].text = question.explanation[0].text.split(
-              "\n"
-            );
-          }
-
-          return question;
-        });
-
-        console.log("checing form dat", formData);
-
         const updatedFormData = generalContext.mocktestId.length
           ? {
               ...formData,
@@ -209,9 +179,9 @@ const QuestionForm = () => {
 
         let url = generalContext.mocktestId.length
           ? `${API}/mocktest/add-question`
-          : `${API}/question/create-question`;
+          : `${API}/question/update-question`;
         const newQuestion = await fetch(url, {
-          method: generalContext.mocktestId.length ? "PATCH" : "POST",
+          method: generalContext.mocktestId.length ? "PATCH" : "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(updatedFormData),
         });
@@ -220,7 +190,7 @@ const QuestionForm = () => {
 
         if (addedNewQuestion.success) {
           alert(addedNewQuestion.msg);
-        //   window.location.reload();
+          // window.location.reload();
         }
       })
       .catch((error) => console.log(error));
