@@ -20,11 +20,11 @@ const QuestionPreview = () => {
                       text={item.text}
                       textTag="h6"
                     />
-                    <img
+                    {item.image ? <img
                       className="question-image"
                       src={item.image}
                       alt={`Img ${index + 1}`}
-                    />
+                    /> : null}
                   </div>
                 )
               )}
@@ -68,11 +68,11 @@ const QuestionPreview = () => {
                           text={item.text}
                           textTag="h6"
                         />
-                        <img
+                        {item.image ? <img
                           className="question-image"
                           src={item.image}
                           alt={`Img ${idx + 1}`}
-                        />
+                        /> : null}
                       </div>
                     ))}
                   </div>
@@ -90,11 +90,11 @@ const QuestionPreview = () => {
                             text={item.text}
                             textTag="h6"
                           />
-                          <img
+                          {item.image ? <img
                             className="question-image"
                             src={item.image}
                             alt={`Img ${idx + 1}`}
-                          />
+                          /> : null}
                         </div>
                       </div>
                     ))}
@@ -105,16 +105,26 @@ const QuestionPreview = () => {
                     <div className="explanation-wrapper">
                       {subQuestion.explanation.map((item, idx) => (
                         <div key={idx}>
-                          <MathText
-                            className="mb-2 question-wrapper"
-                            text={item.text}
-                            textTag="h6"
-                          />
-                          <img
+                          {item.text.length > 1 ? item.text.map((textI, idx) => (
+                            <div key={idx}>
+                              <MathText
+                                className="mb-2 question-wrapper"
+                                text={textI}
+                                textTag="h6"
+                              />
+                            </div>
+                          )) :
+                            <MathText
+                              className="mb-2 question-wrapper"
+                              text={item.text}
+                              textTag="h6"
+                            />
+                          }
+                          {item.image ? <img
                             className="question-image"
                             src={item.image}
                             alt={`Img ${idx + 1}`}
-                          />
+                          /> : null}
                         </div>
                       ))}
                     </div>
