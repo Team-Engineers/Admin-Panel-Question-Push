@@ -133,7 +133,8 @@ const QuestionForm = () => {
 
   const handleImageUpload = async (arr) => {
     for (let obj of arr) {
-      if (obj.image === "") continue;
+      if (obj.image === "" || !obj.image?.name) continue;
+
 
       const name = +new Date() + "-" + obj.image.name;
       const imageRef = ref(storage, `questionImage/${name}`);
