@@ -16,7 +16,7 @@ export const GeneralContextProvider = ({ children }) => {
   const [difficulty, setDifficulty] = useState([]);
   const [topic, setTopic] = useState([]);
   const [subtopic, setSubtopic] = useState([]);
-  const [currentTopic,setCurrentTopic] = useState('');
+  const [currentTopic, setCurrentTopic] = useState("");
   const [entranceExams, setEntranceExams] = useState([]);
   const [otherQuestions, setOtherQuestions] = useState([]);
   const [previewData, setPreviewData] = useState({
@@ -103,7 +103,7 @@ export const GeneralContextProvider = ({ children }) => {
         setCurrentTopic,
         currentTopic,
         setPreviewData,
-        previewData
+        previewData,
       }}
     >
       {children}

@@ -25,6 +25,7 @@ const QuestionUpdate = () => {
 
   const [entranceExamNames, setEntranceExamNames] = useState([]);
   const [isSubquestion, setIsSubquestion] = useState(false);
+  const [otherQuestions, setOtherQuestions] = useState([]);
 
   // Version 2
   const [formData, setFormData] = useState({
@@ -63,18 +64,31 @@ const QuestionUpdate = () => {
         const response = await axios.get(`${API}/question/find-questions`, {
           params: params,
         });
-        // console.log("response of singlge", response.data.requestedData);
         setFormData(response.data.requestedData[0]);
+        const params2 = {
+          topic: response.data.requestedData[0].topic,
+        };
+        try {
+          const response2 = await axios.get(`${API}/question/find-questions`, {
+            params: params2,
+          });
+          setOtherQuestions(response2.data.requestedData);
+          
+        } catch (error) {
+          console.log("error", error);
+        }
       } catch (error) {
         console.log("error", error);
       }
     };
-
     fetchData();
   }, [id]);
 
   generalContext.setCurrentTopic(formData?.topic);
   generalContext.setPreviewData(formData);
+  
+  generalContext.setOtherQuestions(otherQuestions);
+
 
   const handleChange = (e, index, fieldName, subFieldName, subIndex) => {
     const { name, value, files } = e.target;
@@ -198,35 +212,6 @@ const QuestionUpdate = () => {
     await Promise.all(anArray.map(handleImageUpload))
       .then(async () => {
         const updatedEntranceExam = entranceExamNames;
-        if (
-          formData.questionTextAndImages.length > 0 &&
-          formData.questionTextAndImages[0]?.text
-        ) {
-          if (formData.questionTextAndImages[0].text.includes("\n")) {
-            formData.questionTextAndImages[0].text = formData.questionTextAndImages[0].text.split(
-              "\n"
-            );
-          }
-        }
-
-        formData.subQuestions.map((question) => {
-          if (question.questionTextAndImages[0].text.includes("\n")) {
-            question.questionTextAndImages[0].text = question.questionTextAndImages[0].text.split(
-              "\n"
-            );
-          }
-
-          if (question.explanation[0].text.includes("\n")) {
-            question.explanation[0].text = question.explanation[0].text.split(
-              "\n"
-            );
-          }
-
-          return question;
-        });
-
-        console.log("checing form dat", formData);
-
         const updatedFormData = generalContext.mocktestId.length
           ? {
               ...formData,
@@ -249,7 +234,7 @@ const QuestionUpdate = () => {
         if (addedNewQuestion.success) {
           // alert(addedNewQuestion.msg);
           toast.success("Question Updated Successfully");
-          window.location.reload();
+          // window.location.reload();
         }
       })
       .catch((error) => console.log(error));

@@ -1,34 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "../SidePanel/SidePanel.css";
 import AddIcon from "@mui/icons-material/Add";
 import { GeneralContext } from "../../context/GeneralContext";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import { API } from "../../utils/constant";
 
 const SidePanel = () => {
   const generalContext = useContext(GeneralContext);
   const [testId, setTestId] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
-
-  useEffect(() => {
-    const fetchAllQuestion = async () => {
-      const params = {
-        topic: generalContext.currentTopic,
-      };
-      try {
-        const response = await axios.get(`${API}/question/find-questions`, {
-          params: params,
-        });
-        generalContext.setOtherQuestions(response.data.requestedData);
-      } catch (error) {
-        console.log("error", error);
-      }
-    };
-    fetchAllQuestion();
-  }, [generalContext]);
   return (
     <div className="sidePanel">
       {!id ? (
