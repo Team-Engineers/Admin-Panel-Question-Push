@@ -8,3 +8,9 @@
 p{
   margin-bottom: 0px !important;
 }
+
+
+.minimal-space {
+  margin: 0; /* Set margin to 0 */
+  padding: 0; /* Set padding to 0 */
+}
