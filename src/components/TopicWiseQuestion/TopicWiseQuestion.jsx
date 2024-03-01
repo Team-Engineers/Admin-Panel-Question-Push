@@ -43,10 +43,10 @@ const TopicWiseQuestion = () => {
   const fetchAllQuestion = async () => {
     const params = {
       topic: topic,
-      // limit : 5,
-      // offset : 0
-      // subtopic:  subTopic,
     };
+    if (subTopic) {
+      params.subTopic = subTopic;
+    }
     try {
       const response = await axios.get(`${API}/question/find-questions`, {
         params: params,
