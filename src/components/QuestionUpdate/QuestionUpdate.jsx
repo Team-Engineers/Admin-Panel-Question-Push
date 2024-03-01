@@ -69,7 +69,7 @@ const QuestionUpdate = () => {
           topic: response.data.requestedData[0].topic,
         };
         if (response.data.requestedData[0].subTopic) {
-          params2.subTopic = subTopic;
+          params2.subTopic = response.data.requestedData[0].subTopic;
         }
         try {
           const response2 = await axios.get(`${API}/question/find-questions`, {
