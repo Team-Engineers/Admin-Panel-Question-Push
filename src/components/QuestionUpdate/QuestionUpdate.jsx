@@ -76,7 +76,6 @@ const QuestionUpdate = () => {
             params: params2,
           });
           setOtherQuestions(response2.data.requestedData);
-          
         } catch (error) {
           console.log("error", error);
         }
@@ -89,9 +88,8 @@ const QuestionUpdate = () => {
 
   generalContext.setCurrentTopic(formData?.topic);
   generalContext.setPreviewData(formData);
-  
-  generalContext.setOtherQuestions(otherQuestions);
 
+  generalContext.setOtherQuestions(otherQuestions);
 
   const handleChange = (e, index, fieldName, subFieldName, subIndex) => {
     const { name, value, files } = e.target;
@@ -243,9 +241,9 @@ const QuestionUpdate = () => {
       .catch((error) => console.log(error));
   };
 
-  const handleDelete = async () => {
+  const handleDelete = async ({ id }) => {
     try {
-      // await axios.delete(`${API}/question/delete-question`);
+      await axios.delete(`${API}/question/delete-question`, { id });
       toast.success("Item deleted successfully!");
     } catch (error) {
       console.log("error", error);
@@ -620,6 +618,53 @@ const QuestionUpdate = () => {
                   </button>
                   {/* End of input section for questionTextAndImages */}
                 </div>
+                <Modal
+                  open={showModal}
+                  onClose={toggleModal}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      width: 400,
+                      bgcolor: "background.paper",
+                      border: "2px solid #000",
+                      boxShadow: 24,
+                      p: 4,
+                    }}
+                  >
+                    <Typography
+                      id="modal-modal-title"
+                      variant="h6"
+                      component="h2"
+                    >
+                      Confirm Delete
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                      Are you sure you want to delete?
+                    </Typography>
+                    <Button
+                      onClick={() => handleDelete(subQuestion._id)}
+                      variant="contained"
+                      color="primary"
+                      sx={{ mr: 2, mt: 2 }}
+                    >
+                      Yes
+                    </Button>
+                    <Button
+                      onClick={toggleModal}
+                      variant="contained"
+                      color="secondary"
+                      sx={{ mt: 2 }}
+                    >
+                      No
+                    </Button>
+                  </Box>
+                </Modal>
                 {/* Add input fields for options, correctOptionIndex, explanation */}
               </div>
             ))}
@@ -666,49 +711,6 @@ const QuestionUpdate = () => {
           Reset Form
         </button>
       </form>
-      <Modal
-        open={showModal}
-        onClose={toggleModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Confirm Delete
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Are you sure you want to delete?
-          </Typography>
-          <Button
-            onClick={handleDelete}
-            variant="contained"
-            color="primary"
-            sx={{ mr: 2, mt: 2 }}
-          >
-            Yes
-          </Button>
-          <Button
-            onClick={toggleModal}
-            variant="contained"
-            color="secondary"
-            sx={{ mt: 2 }}
-          >
-            No
-          </Button>
-        </Box>
-      </Modal>
     </div>
   );
 };

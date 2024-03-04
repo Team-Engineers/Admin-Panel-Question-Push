@@ -40,6 +40,14 @@ const Navbar = () => {
         >
           Pushed Questions{" "}
         </li>
+        <li
+          onClick={() => {
+            localStorage.clear();
+            window.location.reload()
+          }}
+        >
+          Log out{" "}
+        </li>
       </ul>
     </div>
   );

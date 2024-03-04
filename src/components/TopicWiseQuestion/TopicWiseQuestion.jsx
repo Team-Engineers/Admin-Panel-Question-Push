@@ -30,9 +30,9 @@ const TopicWiseQuestion = () => {
   };
 
   // Function to handle delete action
-  const handleDelete = async () => {
+  const handleDelete = async ({ id }) => {
     try {
-      // await axios.delete(`${API}/question/delete-question`);
+      await axios.delete(`${API}/question/delete-question`, { id });
       toast.success("Item deleted successfully!");
     } catch (error) {
       console.log("error", error);
@@ -179,7 +179,7 @@ const TopicWiseQuestion = () => {
                             Are you sure you want to delete?
                           </Typography>
                           <Button
-                            onClick={handleDelete}
+                            onClick={()=>handleDelete(question._id)}
                             variant="contained"
                             color="primary"
                             sx={{ mr: 2, mt: 2 }}

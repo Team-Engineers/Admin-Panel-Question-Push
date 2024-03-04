@@ -1,5 +1,7 @@
 export const API = "https://ourntamockpapers.onrender.com/api";
 
+export const USERAPI = "https://testknock-questions.onrender.com/api"
+
 export const TEST_DATA = {
   success: true,
   data: {
