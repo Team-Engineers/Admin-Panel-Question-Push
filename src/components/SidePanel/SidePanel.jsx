@@ -5,13 +5,13 @@ import { GeneralContext } from "../../context/GeneralContext";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useNavigate, useParams } from "react-router-dom";
 
-const SidePanel = () => {
+const SidePanel = ({width}) => {
   const generalContext = useContext(GeneralContext);
   const [testId, setTestId] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
   return (
-    <div className="sidePanel">
+    <div className="sidePanel" style = {{width : width}}>
       {!id ? (
         <>
           <div

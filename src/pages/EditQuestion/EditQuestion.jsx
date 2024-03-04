@@ -10,9 +10,9 @@ const EditQuestion = () => {
       <Navbar />
 
       <div className="subContainer">
-        <SidePanel />
 
-        <div className="formContainer mt-3" style={{ marginLeft: "20%" }}>
+        <SidePanel width = "5%"/>
+        <div className="formContainer mt-3 w-100" style={{ marginLeft: "5%" }}>
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-7">

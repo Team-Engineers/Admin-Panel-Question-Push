@@ -13,34 +13,41 @@ const QuestionPreview = () => {
             <div>
               <h4>Paragraph:</h4>
               {generalContext.previewData?.questionTextAndImages?.map(
-                (item, index) => (
-                  <div key={index}>
-                    <MathText
-                      className="mb-2 question-wrapper"
-                      text={item.text}
-                      textTag="h6"
-                    />
-                    {item.image ? (
-                      <img
-                        className="question-image"
-                        src={item.image}
-                        alt={`Img ${index + 1}`}
+                (item, index) =>
+                  item ? (
+                    <div key={index}>
+                      <MathText
+                        className="mb-2 question-wrapper"
+                        text={item.text}
+                        textTag="h6"
                       />
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                )
+                      {item.image ? (
+                        <img
+                          className="question-image"
+                          src={item.image}
+                          alt={`Img ${index + 1}`}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  ) : (
+                    ""
+                  )
               )}
             </div>
           </>
         ) : null}
 
         <div className="subQuestionContainer">
-          <h4>
-            {generalContext.previewData?.subQuestions && "Sub"} Question
-            {generalContext.previewData?.subQuestions && "s"}:
-          </h4>
+          {generalContext.previewData?.subQuestions[0] ? (
+            <h4>
+              {generalContext.previewData?.subQuestions && "Sub"} Question
+              {generalContext.previewData?.subQuestions && "s"}:
+            </h4>
+          ) : (
+            ""
+          )}
 
           <div>
             {generalContext.previewData?.subQuestions?.map(

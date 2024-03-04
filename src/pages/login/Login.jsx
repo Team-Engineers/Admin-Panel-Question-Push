@@ -113,7 +113,7 @@ const Login = () => {
                         />
 
                         {!emailValid && (
-                          <h6 className="error-message">
+                          <h6 className="text-danger">
                             Please enter a valid email address.
                           </h6>
                         )}
@@ -131,11 +131,7 @@ const Login = () => {
                           }}
                           id="form2Example27"
                           className="form-control form-control-lg"
-                          onKeyPress={(e) => {
-                            if (e.key === "Enter") {
-                              handleSignIn(e);
-                            }
-                          }}
+                          
                         />
                       </div>
                       {showError ? (
