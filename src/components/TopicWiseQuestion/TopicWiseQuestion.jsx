@@ -29,13 +29,33 @@ const TopicWiseQuestion = () => {
     setShowModal(!showModal);
   };
 
+  const confirmDelete = async (id) => {
+    const password = prompt("Please enter the admin password:");
+
+    if (password === null) {
+      return;
+    }
+
+    const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+
+    if (password.trim() === adminPassword.trim()) {
+      await handleDelete(id);
+    } else {
+      toast.error("Incorrect admin password");
+    }
+  };
   // Function to handle delete action
-  const handleDelete = async ({ id }) => {
+  const handleDelete = async (id) => {
+
     try {
-      await axios.delete(`${API}/question/delete-question`, { id });
+      const url = `${API}/question/delete-question/${id}`;
+      await fetch(url, {
+        method: "DELETE",
+      });
+
       toast.success("Item deleted successfully!");
     } catch (error) {
-      console.log("error", error);
+      // console.log("error", error);
       toast.error("Error in deleting!");
     }
     toggleModal();
@@ -55,7 +75,7 @@ const TopicWiseQuestion = () => {
       setQuestionData(response.data.requestedData);
       generalContext.setOtherQuestions(response.data.requestedData);
     } catch (error) {
-      console.log("error", error);
+      // console.log("error", error);
     }
   };
 
@@ -179,7 +199,7 @@ const TopicWiseQuestion = () => {
                             Are you sure you want to delete?
                           </Typography>
                           <Button
-                            onClick={()=>handleDelete(question._id)}
+                            onClick={() => confirmDelete(question._id)}
                             variant="contained"
                             color="primary"
                             sx={{ mr: 2, mt: 2 }}

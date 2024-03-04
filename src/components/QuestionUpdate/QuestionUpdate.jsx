@@ -15,7 +15,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import slugify from "slugify";
 import { API } from "../../utils/constant";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -47,6 +47,8 @@ const QuestionUpdate = () => {
     ],
   });
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+
   const toggleModal = () => {
     setShowModal(!showModal);
   };
@@ -77,10 +79,10 @@ const QuestionUpdate = () => {
           });
           setOtherQuestions(response2.data.requestedData);
         } catch (error) {
-          console.log("error", error);
+          // console.log("error", error);
         }
       } catch (error) {
-        console.log("error", error);
+        // console.log("error", error);
       }
     };
     fetchData();
@@ -241,18 +243,63 @@ const QuestionUpdate = () => {
       .catch((error) => console.log(error));
   };
 
-  const handleDelete = async ({ id }) => {
+  const confirmDelete = async () => {
+    const password = prompt("Please enter the admin password:");
+
+    if (password === null) {
+      return;
+    }
+
+    const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+
+    if (password.trim() === adminPassword.trim()) {
+      await handleDeleteAndNavigate();
+    } else {
+      toast.error("Incorrect admin password");
+    }
+  };
+  const handleDeleteAndNavigate = async (id) => {
     try {
-      const params = {
-        _id: id,
-      };
-      await axios.delete(`${API}/question/delete-question`, { params: params });
+      // Find the index of the question in the array
+      const index = otherQuestions.findIndex((question) => question.id === id);
+
+      if (index !== -1) {
+        otherQuestions.splice(index, 1);
+        const nextIndex = index === otherQuestions.length ? 0 : index;
+        let moveTo;
+        if (otherQuestions.length > 0) {
+          const nextQuestionId = otherQuestions[nextIndex]._id;
+          moveTo = `/editQuestion/${nextQuestionId}`;
+          // console.log("nextqeution id", nextQuestionId);
+        } else {
+          moveTo = "/";
+        }
+        await handleDelete(moveTo);
+      } else {
+        // Question not found
+        toast.error("Question not found");
+      }
+    } catch (error) {
+      // console.error("Error deleting question:", error);
+      toast.error("Error deleting question");
+    }
+  };
+
+  const handleDelete = async (moveTo) => {
+    // console.log("moveto value", moveTo);
+    try {
+      const url = `${API}/question/delete-question/${id}`;
+      await fetch(url, {
+        method: "DELETE",
+      });
+
       toast.success("Item deleted successfully!");
     } catch (error) {
-      console.log("error", error);
+      // console.log("error", error);
       toast.error("Error in deleting!");
     }
     toggleModal();
+    navigate(moveTo);
   };
 
   return (
@@ -651,7 +698,7 @@ const QuestionUpdate = () => {
                       Are you sure you want to delete?
                     </Typography>
                     <Button
-                      onClick={() => handleDelete(subQuestion._id)}
+                      onClick={() => confirmDelete()}
                       variant="contained"
                       color="primary"
                       sx={{ mr: 2, mt: 2 }}
