@@ -151,8 +151,14 @@ const Login = () => {
                         <button
                           className="btn btn-dark btn-lg btn-block"
                           type="button"
-                          onClick={() => handleSignIn()}
-                          
+                          onClick={(e) => handleSignIn(e)}
+                          disabled={
+                            password === "" ||
+                            email === "" ||
+                            !emailValid ||
+                            isLoading ||
+                            disableButton
+                          }
                         >
                           Login
                         </button>
