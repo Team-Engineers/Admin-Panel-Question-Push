@@ -243,7 +243,10 @@ const QuestionUpdate = () => {
 
   const handleDelete = async ({ id }) => {
     try {
-      await axios.delete(`${API}/question/delete-question`, { id });
+      const params = {
+        _id: id,
+      };
+      await axios.delete(`${API}/question/delete-question`, { params: params });
       toast.success("Item deleted successfully!");
     } catch (error) {
       console.log("error", error);

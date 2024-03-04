@@ -131,7 +131,11 @@ const Login = () => {
                           }}
                           id="form2Example27"
                           className="form-control form-control-lg"
-                          
+                          onKeyPress={(e) => {
+                            if (e.key === "Enter") {
+                              handleSignIn(e);
+                            }
+                          }}
                         />
                       </div>
                       {showError ? (
@@ -148,13 +152,7 @@ const Login = () => {
                           className="btn btn-dark btn-lg btn-block"
                           type="button"
                           onClick={() => handleSignIn()}
-                          disabled={
-                            password === "" ||
-                            email === "" ||
-                            !emailValid ||
-                            isLoading ||
-                            disableButton
-                          }
+                          
                         >
                           Login
                         </button>
