@@ -24,7 +24,7 @@ function App() {
           <Route exact path="/all-question" element={<AllQuestion />} />
           <Route exact path="/editQuestion/:id" element={<EditQuestion />} />
           <Route path="*" element={<Nopage />} />
-        </Route>  
+        </Route>
         {isUserSignedIn() ? (
           <Route exact path="/" element={<HomePage />} />
         ) : (

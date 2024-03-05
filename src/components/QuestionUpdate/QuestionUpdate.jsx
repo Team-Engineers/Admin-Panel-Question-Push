@@ -2,7 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import "../QuestionForm/QuestionForm.css";
 import { GeneralContext } from "../../context/GeneralContext";
 import { storage } from "../../config/firebaseConfig";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import { Modal, Box, Typography, Button } from "@mui/material";
@@ -90,7 +95,6 @@ const QuestionUpdate = () => {
 
   generalContext.setCurrentTopic(formData?.topic);
   generalContext.setPreviewData(formData);
-
   generalContext.setOtherQuestions(otherQuestions);
 
   const handleChange = (e, index, fieldName, subFieldName, subIndex) => {
@@ -301,6 +305,58 @@ const QuestionUpdate = () => {
     toggleModal();
     navigate(moveTo);
   };
+
+  const handleDeleteExplanation = (index, idx) => {
+    const newFormData = { ...formData };
+    newFormData.subQuestions[index].explanation.splice(idx, 1);
+    setFormData(newFormData);
+  };
+
+  const handleDeleteOption = (index, idx) => {
+    const newFormData = { ...formData };
+    newFormData.subQuestions[index].options.splice(idx, 1);
+    setFormData(newFormData);
+  };
+
+  const handleDeleteImage = async (url, index, idx, type) => {
+    const updatedFormData = { ...formData };
+    if (type === "options") {
+      updatedFormData.subQuestions[index].options[idx].image = "";
+    }
+    if (type === "explanation") {
+      updatedFormData.subQuestions[index].explanation[idx].image = "";
+    }
+    setFormData(updatedFormData);
+
+    // If the image has been uploaded to Firebase, delete it from Firebase storage
+    if (
+      typeof url === "string" &&
+      url.startsWith("https://firebasestorage.googleapis.com")
+    ) {
+      await deleteImage(url);
+    } else {
+      console.error(
+        "Invalid URL or URL does not start with 'https://firebasestorage.googleapis.com'"
+      );
+    }
+  };
+
+  const deleteImage = async (imageUrl) => {
+    try {
+      const imageRef = ref(storage, imageUrl);
+      await deleteObject(imageRef);
+      console.log(
+        `Image '${imageUrl}' deleted successfully from Firebase Storage.`
+      );
+    } catch (error) {
+      console.error(
+        `Failed to delete image '${imageUrl}' from Firebase Storage:`,
+        error
+      );
+    }
+  };
+
+  console.log(formData);
 
   return (
     // Version 2
@@ -604,13 +660,44 @@ const QuestionUpdate = () => {
                           handleChange(e, index, "subQuestions", "options", idx)
                         }
                       />
-                      <input
-                        type="file"
-                        name="image"
-                        onChange={(e) =>
-                          handleChange(e, index, "subQuestions", "options", idx)
-                        }
-                      />
+                      <div>
+                        <input
+                          type="file"
+                          name="image"
+                          onChange={(e) =>
+                            handleChange(
+                              e,
+                              index,
+                              "subQuestions",
+                              "options",
+                              idx
+                            )
+                          }
+                        />
+                        {item.image && (
+                          <button
+                            type="button"
+                            class="btn btn-danger m-2"
+                            onClick={() =>
+                              handleDeleteImage(
+                                item.image,
+                                index,
+                                idx,
+                                "options"
+                              )
+                            }
+                          >
+                            Delete Image
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          class="btn btn-danger m-2"
+                          onClick={() => handleDeleteOption(index, idx)}
+                        >
+                          Delete Option
+                        </button>
+                      </div>
                     </div>
                   ))}
                   <button
@@ -644,19 +731,44 @@ const QuestionUpdate = () => {
                           )
                         }
                       ></textarea>
-                      <input
-                        type="file"
-                        name="image"
-                        onChange={(e) =>
-                          handleChange(
-                            e,
-                            index,
-                            "subQuestions",
-                            "explanation",
-                            idx
-                          )
-                        }
-                      />
+                      <div>
+                        <input
+                          type="file"
+                          name="image"
+                          onChange={(e) =>
+                            handleChange(
+                              e,
+                              index,
+                              "subQuestions",
+                              "explanation",
+                              idx
+                            )
+                          }
+                        />
+                        {item.image && (
+                          <button
+                            type="button"
+                            class="btn btn-danger m-2"
+                            onClick={() =>
+                              handleDeleteImage(
+                                item.image,
+                                index,
+                                idx,
+                                "explanation"
+                              )
+                            }
+                          >
+                            Delete Image
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          class="btn btn-danger"
+                          onClick={() => handleDeleteExplanation(index, idx)}
+                        >
+                          Delete Explanation
+                        </button>
+                      </div>
                     </div>
                   ))}
                   <button
@@ -666,6 +778,7 @@ const QuestionUpdate = () => {
                   >
                     Add Explanations
                   </button>
+
                   {/* End of input section for questionTextAndImages */}
                 </div>
                 <Modal
