@@ -126,15 +126,7 @@ const QuestionPreview = () => {
                     {/* <h5>Explanations :</h5> */}
 
                     <div className="explanation-wrapper">
-                      <div className=" d-flex flex-row gap-2 justify-content-start align-items-center">
-                        <h6 className="mb-0 text-primary fw-bold">Answer:</h6>
-                        <h6 className="mb-0  fw-bold text-secondary">
-                          Option{" "}
-                          {subQuestion?.correctOptionIndex !== undefined
-                            ? alphabets[subQuestion.correctOptionIndex]
-                            : ""}
-                        </h6>
-                      </div>
+
                       <h6 className="text-primary fw-bold">Solution:</h6>
                       {subQuestion.explanation.map((item, idx) => (
                         <div key={idx}>
