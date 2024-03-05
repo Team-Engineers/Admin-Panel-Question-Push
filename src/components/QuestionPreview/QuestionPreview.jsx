@@ -11,7 +11,11 @@ const QuestionPreview = () => {
         {generalContext.previewData.subQuestions ? (
           <>
             <div>
-              <h4>Paragraph:</h4>
+              {generalContext.previewData?.questionTextAndImages[0]?.text[0] ? (
+                <h4>Paragraph:</h4>
+              ) : (
+                ""
+              )}
               {generalContext.previewData?.questionTextAndImages?.map(
                 (item, index) =>
                   item ? (
@@ -40,14 +44,14 @@ const QuestionPreview = () => {
         ) : null}
 
         <div className="subQuestionContainer">
-          {generalContext.previewData?.subQuestions[0] ? (
+          {/* {generalContext.previewData?.subQuestions[0] ? (
             <h4>
               {generalContext.previewData?.subQuestions && "Sub"} Question
               {generalContext.previewData?.subQuestions && "s"}:
             </h4>
           ) : (
             ""
-          )}
+          )} */}
 
           <div>
             {generalContext.previewData?.subQuestions?.map(
@@ -59,19 +63,20 @@ const QuestionPreview = () => {
 
                   <div id="question-details flex-grow">
                     <div>
-                      <p>
-                        Correct Option Index:
-                        {
-                          generalContext.previewData?.subQuestions
-                            ?.correctOptionIndex
-                        }
+                      <p className="fw-bold text-success">
+                        Correct Option: 
+                        {subQuestion?.correctOptionIndex !== undefined
+                          ? String.fromCharCode(
+                              65 + subQuestion.correctOptionIndex
+                            )
+                          : ""}
                       </p>
                     </div>
                   </div>
 
                   <div>
                     {/* Input section for questionTextAndImages */}
-                    <h5>Question Text and Images:</h5>
+                    {/* <h5>Question Text and Images:</h5> */}
                     {subQuestion.questionTextAndImages.map((item, idx) => (
                       <div key={idx}>
                         <MathText
@@ -93,7 +98,7 @@ const QuestionPreview = () => {
                   </div>
 
                   <div>
-                    <h5>Options :</h5>
+                    {/* <h5>Options :</h5> */}
                     {subQuestion.options.map((item, idx) => (
                       <div key={idx} className="option-wrapper">
                         <span className="option-alphabet">
@@ -120,8 +125,21 @@ const QuestionPreview = () => {
                   </div>
 
                   <div>
-                    <h5>Explanations :</h5>
+                    {/* <h5>Explanations :</h5> */}
+
                     <div className="explanation-wrapper">
+                      <div className=" d-flex flex-row gap-2 justify-content-start align-items-center">
+                        <h6 className="mb-0 text-primary fw-bold">Answer:</h6>
+                        <h6 className="mb-0  fw-bold text-secondary">
+                          Option{" "}
+                          {subQuestion?.correctOptionIndex !== undefined
+                            ? String.fromCharCode( 
+                                65 + subQuestion.correctOptionIndex
+                              )
+                            : ""}
+                        </h6>
+                      </div>
+                      <h6 className="text-primary fw-bold">Solution:</h6>
                       {subQuestion.explanation.map((item, idx) => (
                         <div key={idx}>
                           <MathText

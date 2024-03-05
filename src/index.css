@@ -3,19 +3,22 @@
   padding: 0;
   box-sizing: border-box;
 }
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,400;0,500;0,600;0,700;0,800;1,900&display=swap");
 
-
-p{
-  margin-bottom: 0px !important;
+body {
+  font-family: "Montserrat", sans-serif !important;
 }
 
+p {
+  margin-bottom: 0px !important;
+}
 
 .minimal-space {
   margin: 0; /* Set margin to 0 */
   padding: 0; /* Set padding to 0 */
 }
 
-ul li:hover{
+ul li:hover {
   text-decoration: underline;
-  transition : ease-in
+  transition: ease-in;
 }
