@@ -64,11 +64,9 @@ const QuestionPreview = () => {
                   <div id="question-details flex-grow">
                     <div>
                       <p className="fw-bold text-success">
-                        Correct Option: 
+                        Correct Option:
                         {subQuestion?.correctOptionIndex !== undefined
-                          ? String.fromCharCode(
-                              65 + subQuestion.correctOptionIndex
-                            )
+                          ? alphabets[subQuestion.correctOptionIndex]
                           : ""}
                       </p>
                     </div>
@@ -133,9 +131,7 @@ const QuestionPreview = () => {
                         <h6 className="mb-0  fw-bold text-secondary">
                           Option{" "}
                           {subQuestion?.correctOptionIndex !== undefined
-                            ? String.fromCharCode( 
-                                65 + subQuestion.correctOptionIndex
-                              )
+                            ? alphabets[subQuestion.correctOptionIndex]
                             : ""}
                         </h6>
                       </div>
