@@ -12,26 +12,31 @@ export const MathText = ({ text, textTag = "p" }) => {
 
   const jsxElements = parts.flatMap((part, index) => {
     const hasMathExpression = /\$.+?\$/.test(part);
-
     const hasHTMLTags = /<.*?>/.test(part);
 
     if (hasMathExpression) {
-      const subparts = part.split(/\$(.*?)\$/);
+      const subparts = part.split(/(\$.*?\$)/);
 
-      return subparts.map((subpart, subIndex) => {
-        if (subIndex % 2 !== 0) {
-          return (
-            <MathComponent
-              key={`${index}_${subIndex}`}
-              tex={subpart}
-              display={false}
-              className="math-expression"
-            />
-          );
-        } else {
-          return <span key={`${index}_${subIndex}`}>{subpart}</span>;
-        }
-      }).concat(<br key={`br_${index}`} className="minimal-space" />);
+      return subparts
+        .map((subpart, subIndex) => {
+          if (subIndex % 2 !== 0) {
+            return (
+              <MathComponent
+                key={`${index}_${subIndex}`}
+                tex={subpart}
+                display={false}
+                className="math-expression"
+              />
+            );
+          } else {
+            // Split on spaces to ensure they are considered
+            const words = subpart.split(/\s/);
+            return words.map((word, wordIndex) => (
+              <span key={`${index}_${subIndex}_${wordIndex}`}>{word} </span> // Added space after each word
+            ));
+          }
+        })
+        .concat(<br key={`br_${index}`} className="minimal-space" />);
     } else if (hasHTMLTags) {
       return [
         <TextTag
@@ -42,10 +47,12 @@ export const MathText = ({ text, textTag = "p" }) => {
         <br key={`br_${index}`} className="minimal-space" />,
       ];
     } else {
-      return [
-        <span key={index}>{part}</span>,
-        <br key={`br_${index}`} className="minimal-space" />,
-      ];
+      const words = part.split(/\s/);
+      return words
+        .map((word, wordIndex) => (
+          <span key={`${index}_${wordIndex}`}>{word} </span> // Added space after each word
+        ))
+        .concat(<br key={`br_${index}`} className="minimal-space" />);
     }
   });
 
