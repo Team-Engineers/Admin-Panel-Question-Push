@@ -183,16 +183,27 @@ const QuestionUpdate = () => {
   const handleImageUpload = async (arr) => {
     for (let obj of arr) {
       if (!obj.image) continue;
+
+      if (obj.image.startsWith("https://firebasestorage.googleapis.com")) {
+        // console.log("Image already uploaded:", obj.image);
+        continue; 
+      }
+
+      // console.log("Uploading image:", obj.image);
+
       const name = +new Date() + "-" + obj.image.name;
       const imageRef = ref(storage, `questionImage/${name}`);
 
-      await uploadBytes(imageRef, obj.image)
-        .then(() => {})
-        .catch((error) => alert(error));
+      // console.log("Image reference created:", imageRef);
 
-      await getDownloadURL(imageRef)
-        .then((url) => (obj.image = url))
-        .catch((error) => alert(error));
+      try {
+        await uploadBytes(imageRef, obj.image);
+        const url = await getDownloadURL(imageRef);
+        obj.image = url;
+        // console.log("Image uploaded and URL updated:", obj.image);
+      } catch (error) {
+        alert(error);
+      }
     }
   };
 
