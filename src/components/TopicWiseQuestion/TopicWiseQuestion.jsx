@@ -23,6 +23,7 @@ const TopicWiseQuestion = () => {
   const [questionData, setQuestionData] = useState(null);
   const [topic, setTopic] = useState("");
   const [subTopic, setSubTopic] = useState("");
+  const [subject, setSubject] = useState("");
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => {
@@ -46,7 +47,6 @@ const TopicWiseQuestion = () => {
   };
   // Function to handle delete action
   const handleDelete = async (id) => {
-
     try {
       const url = `${API}/question/delete-question/${id}`;
       await fetch(url, {
@@ -67,6 +67,10 @@ const TopicWiseQuestion = () => {
     if (subTopic) {
       params.subTopic = subTopic;
     }
+
+    if (subject) {
+      params.subject = subject;
+    }
     try {
       const response = await axios.get(`${API}/question/find-questions`, {
         params: params,
@@ -86,6 +90,25 @@ const TopicWiseQuestion = () => {
       <div className="row">
         <div className="col-md-12">
           <div className="filter d-flex m-4 gap-3">
+            <div className="input-form">
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Subject</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={subject}
+                  label="Subject"
+                  onChange={(e) => setSubject(e.target.value)}
+                >
+                  {generalContext.subject.map((diff, index) => (
+                    <MenuItem value={slugify(diff, "_")} key={index}>
+                      {diff}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+
             <div className="input-form">
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Topic</InputLabel>
