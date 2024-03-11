@@ -355,7 +355,7 @@ const QuestionUpdate = () => {
     }
   };
 
-  console.log(formData);
+  // console.log(formData);
 
   return (
     // Version 2
