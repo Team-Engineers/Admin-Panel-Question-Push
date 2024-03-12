@@ -186,7 +186,7 @@ const QuestionUpdate = () => {
 
       if (obj.image.startsWith("https://firebasestorage.googleapis.com")) {
         // console.log("Image already uploaded:", obj.image);
-        continue; 
+        continue;
       }
 
       // console.log("Uploading image:", obj.image);
@@ -328,6 +328,12 @@ const QuestionUpdate = () => {
     setFormData(newFormData);
   };
 
+  const handleDeleteQuestionTextandImages = (index, idx) => {
+    const newFormData = { ...formData };
+    newFormData.subQuestions[index].questionTextAndImages.splice(idx, 1);
+    setFormData(newFormData);
+  };
+
   const handleDeleteImage = async (url, index, idx, type) => {
     const updatedFormData = { ...formData };
     if (type === "options") {
@@ -335,6 +341,9 @@ const QuestionUpdate = () => {
     }
     if (type === "explanation") {
       updatedFormData.subQuestions[index].explanation[idx].image = "";
+    }
+    if (type === "questionTextAndImages") {
+      updatedFormData.subQuestions[index].questionTextAndImages[idx].image = "";
     }
     setFormData(updatedFormData);
 
@@ -403,7 +412,25 @@ const QuestionUpdate = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="questionForm">
-        <div id="question-details">
+        <div id="question-details" className="flex-wrap gap-2 justify-content-start">
+          <div className="input-form">
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Subject</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={formData.subject}
+                label="Subject"
+                onChange={(e) => handleChange(e, null, "subject")}
+              >
+                {generalContext.subject.map((diff, index) => (
+                  <MenuItem value={slugify(diff, "_")} key={index}>
+                    {diff}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
           <div className="input-form">
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Topic</InputLabel>
@@ -534,11 +561,6 @@ const QuestionUpdate = () => {
               <div key={index} className="subQuestion">
                 {isSubquestion && <h4>Sub Question {index + 1}</h4>}
 
-                {/* <div>
-                                      <label>Difficulty:</label>
-                                      <input className = 'textInput' type="text" name="difficulty" value={subQuestion.difficulty} onChange={(e) => handleChange(e, index, 'subQuestions','difficulty')} />
-                                  </div> */}
-
                 <div id="question-details flex-grow">
                   <div className="input-form">
                     <FormControl fullWidth>
@@ -630,19 +652,46 @@ const QuestionUpdate = () => {
                           )
                         }
                       ></textarea>
-                      <input
-                        type="file"
-                        name="image"
-                        onChange={(e) =>
-                          handleChange(
-                            e,
-                            index,
-                            "subQuestions",
-                            "questionTextAndImages",
-                            idx
-                          )
-                        }
-                      />
+                      <div>
+                        <input
+                          type="file"
+                          name="image"
+                          onChange={(e) =>
+                            handleChange(
+                              e,
+                              index,
+                              "subQuestions",
+                              "questionTextAndImages",
+                              idx
+                            )
+                          }
+                        />
+                        {item.image && (
+                          <button
+                            type="button"
+                            class="btn btn-danger m-2"
+                            onClick={() =>
+                              handleDeleteImage(
+                                item.image,
+                                index,
+                                idx,
+                                "questionTextAndImages"
+                              )
+                            }
+                          >
+                            Delete Image
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          class="btn btn-danger m-2"
+                          onClick={() =>
+                            handleDeleteQuestionTextandImages(index, idx)
+                          }
+                        >
+                          Delete Question
+                        </button>
+                      </div>
                     </div>
                   ))}
                   <button

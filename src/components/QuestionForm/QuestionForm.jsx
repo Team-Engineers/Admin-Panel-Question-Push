@@ -225,7 +225,25 @@ const QuestionForm = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="questionForm">
-        <div id="question-details">
+        <div id="question-details" className="flex-wrap justify-content-start gap-2">
+          <div className="input-form ">
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Subject</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={formData.subject}
+                label="Subject"
+                onChange={(e) => handleChange(e, null, "subject")}
+              >
+                {generalContext.subject.map((diff, index) => (
+                  <MenuItem value={slugify(diff, "_")} key={index}>
+                    {diff}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
           <div className="input-form ">
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Topic</InputLabel>
