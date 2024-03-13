@@ -340,8 +340,17 @@ const QuestionUpdate = () => {
     setFormData(newFormData);
   };
 
+  const handleDeleteParagraph = (index) => {
+    const newFormData = { ...formData };
+    newFormData.questionTextAndImages.splice(index, 1);
+    setFormData(newFormData);
+  };
+
   const handleDeleteImage = async (url, index, idx, type) => {
     const updatedFormData = { ...formData };
+    if (type === "paragraph") {
+      updatedFormData.questionTextAndImages[index].image = "";
+    }
     if (type === "options") {
       updatedFormData.subQuestions[index].options[idx].image = "";
     }
@@ -538,13 +547,38 @@ const QuestionUpdate = () => {
                       handleChange(e, index, "questionTextAndImages")
                     }
                   ></textarea>
-                  <input
-                    type="file"
-                    name="image"
-                    onChange={(e) =>
-                      handleChange(e, index, "questionTextAndImages")
-                    }
-                  />
+                  <div>
+                    <input
+                      type="file"
+                      name="image"
+                      onChange={(e) =>
+                        handleChange(e, index, "questionTextAndImages")
+                      }
+                    />
+                    {item.image && (
+                      <button
+                        type="button"
+                        class="btn btn-danger m-2"
+                        onClick={() =>
+                          handleDeleteImage(
+                            item.image,
+                            index,
+                            null,
+                            "paragraph"
+                          )
+                        }
+                      >
+                        Delete Image
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      class="btn btn-danger m-2"
+                      onClick={() => handleDeleteParagraph(index)}
+                    >
+                      Delete Paragraph
+                    </button>
+                  </div>
                 </div>
               ))}
               <button
