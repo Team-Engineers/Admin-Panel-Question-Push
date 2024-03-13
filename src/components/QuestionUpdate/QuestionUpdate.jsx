@@ -187,7 +187,10 @@ const QuestionUpdate = () => {
     for (let obj of arr) {
       if (!obj.image) continue;
 
-      if (obj.image.startsWith("https://firebasestorage.googleapis.com")) {
+      if (
+        typeof obj?.image === "string" &&
+        obj?.image?.startsWith("https://firebasestorage.googleapis.com")
+      ) {
         // console.log("Image already uploaded:", obj.image);
         continue;
       }
