@@ -75,6 +75,7 @@ const QuestionUpdate = () => {
         });
         setFormData(response.data.requestedData[0]);
         const params2 = {
+          subject: response.data.requestedData[0].subject,
           topic: response.data.requestedData[0].topic,
         };
         if (response.data.requestedData[0].subTopic) {

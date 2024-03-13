@@ -24,6 +24,7 @@ export const GeneralContextProvider = ({ children }) => {
     difficulty: "",
     topic: "",
     subTopic: "",
+    subject: "",  
     entranceExam: [],
     subQuestions: [
       {
