@@ -37,6 +37,8 @@ const QuestionUpdate = () => {
     questionTextAndImages: [{ text: "", image: "" }],
     difficulty: "",
     topic: "",
+    subject: "",
+
     subTopic: "",
     entranceExam: [],
     subQuestions: [
@@ -412,7 +414,10 @@ const QuestionUpdate = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="questionForm">
-        <div id="question-details" className="flex-wrap gap-2 justify-content-start">
+        <div
+          id="question-details"
+          className="flex-wrap gap-2 justify-content-start"
+        >
           <div className="input-form">
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Subject</InputLabel>

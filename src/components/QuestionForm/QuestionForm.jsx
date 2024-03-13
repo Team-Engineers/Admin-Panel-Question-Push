@@ -30,6 +30,8 @@ const QuestionForm = () => {
     questionTextAndImages: [{ text: "", image: "" }],
     difficulty: "",
     topic: "",
+    subject: "",
+
     subTopic: "",
     entranceExam: [],
     subQuestions: [
