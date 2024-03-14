@@ -11,20 +11,34 @@ import {
   Button,
 } from "@mui/material";
 import axios from "axios";
-import { API } from "../../utils/constant";
+import { API, subdivision } from "../../utils/constant";
 import { GeneralContext } from "../../context/GeneralContext";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import slugify from "slugify";
 import { useNavigate } from "react-router-dom";
 const TopicWiseQuestion = () => {
   const navigate = useNavigate();
   const generalContext = useContext(GeneralContext);
   const [questionData, setQuestionData] = useState(null);
-  const [topic, setTopic] = useState("");
   const [subTopic, setSubTopic] = useState("");
-  const [subject, setSubject] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [subject, setSubject] = useState("");
+  const [topic, setTopic] = useState("");
+
+  const handleSubjectClick = (subjectName) => {
+    setSubject(subjectName);
+    setTopic("");
+    setSubTopic("");
+  };
+
+  const handleTopicClick = (topicName) => {
+    setTopic(topicName);
+    setSubTopic("");
+  };
+
+  const handleSubtopicClick = (subtopicName) => {
+    setSubTopic(subtopicName);
+  };
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -62,14 +76,29 @@ const TopicWiseQuestion = () => {
   };
   const fetchAllQuestion = async () => {
     const params = {
-      topic: topic,
+      topic: topic
+        ?.toLowerCase()
+        .replace(/\s/g, "_")
+        .replace(/&/g, "and")
+        .replace(/\./g, "")
+        .replace(/,/g, ""),
     };
     if (subTopic) {
-      params.subTopic = subTopic;
+      params.subTopic = subTopic
+        ?.toLowerCase()
+        .replace(/\s/g, "_")
+        .replace(/&/g, "and")
+        .replace(/\./g, "")
+        .replace(/,/g, "");
     }
 
     if (subject) {
-      params.subject = subject;
+      params.subject = subject
+        ?.toLowerCase()
+        .replace(/\s/g, "_")
+        .replace(/&/g, "and")
+        .replace(/\./g, "")
+        .replace(/,/g, "")
     }
     try {
       const response = await axios.get(`${API}/question/find-questions`, {
@@ -98,17 +127,71 @@ const TopicWiseQuestion = () => {
                   id="demo-simple-select"
                   value={subject}
                   label="Subject"
-                  onChange={(e) => setSubject(e.target.value)}
+                  onChange={(e) => handleSubjectClick(e.target.value)}
                 >
-                  {generalContext.subject.map((diff, index) => (
-                    <MenuItem value={slugify(diff, "_")} key={index}>
-                      {diff}
+                  {subdivision.map((subjectObj) => (
+                    <MenuItem key={subjectObj.name} value={subjectObj.name}>
+                      {subjectObj.name}
                     </MenuItem>
                   ))}
                 </Select>
               </FormControl>
             </div>
+            {subject &&
+              subdivision.find((sub) => sub.name === subject)?.children && (
+                <div className="input-form">
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Topic</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={topic}
+                      label="Topic"
+                      onChange={(e) => handleTopicClick(e.target.value)}
+                    >
+                      {subdivision
+                        .find((sub) => sub.name === subject)
+                        ?.children.map((topicObj) => (
+                          <MenuItem key={topicObj.name} value={topicObj.name}>
+                            {topicObj.name}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </FormControl>
+                </div>
+              )}
 
+            {/* Render subtopics if topic is selected */}
+            {topic &&
+              subdivision
+                .find((sub) => sub.name === subject)
+                ?.children.find((topicObj) => topicObj.name === topic)
+                ?.topics && (
+                <div className="input-form">
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">
+                      SubTopic
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={subTopic}
+                      label="SubTopic"
+                      onChange={(e) => handleSubtopicClick(e.target.value)}
+                    >
+                      {subdivision
+                        .find((sub) => sub.name === subject)
+                        ?.children.find((topicObj) => topicObj.name === topic)
+                        ?.topics.map((subtopicName) => (
+                          <MenuItem key={subtopicName} value={subtopicName}>
+                            {subtopicName}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </FormControl>
+                </div>
+              )}
+            {/* 
             <div className="input-form">
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Topic</InputLabel>
@@ -145,7 +228,7 @@ const TopicWiseQuestion = () => {
                   ))}
                 </Select>
               </FormControl>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="col-md-12 text-center p-2">
