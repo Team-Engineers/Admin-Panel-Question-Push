@@ -12,8 +12,8 @@ export const GeneralContextProvider = ({ children }) => {
   const [isMocktestMenu, setIsMocktestMenu] = useState(
     pathname === "/new-question" ? false : true
   );
-  const [subject, setSubject] = useState([]);
   const [difficulty, setDifficulty] = useState([]);
+  const [subject, setSubject] = useState([]);
   const [topic, setTopic] = useState([]);
   const [subtopic, setSubtopic] = useState([]);
   const [currentTopic, setCurrentTopic] = useState("");
