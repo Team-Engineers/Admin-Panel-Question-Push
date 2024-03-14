@@ -236,6 +236,64 @@ const QuestionForm = () => {
       })
       .catch((error) => console.log(error));
   };
+  const handleDeleteExplanation = (index, idx) => {
+    const newFormData = { ...formData };
+    newFormData.subQuestions[index].explanation.splice(idx, 1);
+    setFormData(newFormData);
+  };
+
+  const handleDeleteOption = (index, idx) => {
+    const newFormData = { ...formData };
+    newFormData.subQuestions[index].options.splice(idx, 1);
+    setFormData(newFormData);
+  };
+
+  const handleDeleteQuestionTextandImages = (index, idx) => {
+    const newFormData = { ...formData };
+    newFormData.subQuestions[index].questionTextAndImages.splice(idx, 1);
+    setFormData(newFormData);
+  };
+
+  const handleDeleteParagraph = (index) => {
+    const newFormData = { ...formData };
+    newFormData.questionTextAndImages.splice(index, 1);
+    setFormData(newFormData);
+  };
+
+  const handleDeleteImage = async (url, index, idx, type) => {
+    const updatedFormData = { ...formData };
+    if (type === "paragraph") {
+      updatedFormData.questionTextAndImages[index].image = "";
+      setImagePreviews((prevPreviews) => ({
+        ...prevPreviews,
+        paragraph: prevPreviews.paragraph.filter((_, i) => i !== idx),
+      }));
+    }
+    if (type === "options") {
+      updatedFormData.subQuestions[index].options[idx].image = "";
+      setImagePreviews((prevPreviews) => ({
+        ...prevPreviews,
+        options: prevPreviews.options.filter((_, i) => i !== idx),
+      }));
+    }
+    if (type === "explanation") {
+      updatedFormData.subQuestions[index].explanation[idx].image = "";
+      setImagePreviews((prevPreviews) => ({
+        ...prevPreviews,
+        explanations: prevPreviews.explanations.filter((_, i) => i !== idx),
+      }));
+    }
+    if (type === "questionTextAndImages") {
+      updatedFormData.subQuestions[index].questionTextAndImages[idx].image = "";
+      setImagePreviews((prevPreviews) => ({
+        ...prevPreviews,
+        questionTextAndImages: prevPreviews.questionTextAndImages.filter(
+          (_, i) => i !== idx
+        ),
+      }));
+    }
+    setFormData(updatedFormData);
+  };
 
   return (
     // Version 2
@@ -407,20 +465,45 @@ const QuestionForm = () => {
                       handleChange(e, index, "questionTextAndImages")
                     }
                   ></textarea>
-                  <input
-                    type="file"
-                    name="image"
-                    onChange={(e) =>
-                      handleChange(e, index, "questionTextAndImages")
-                    }
-                  />
-                  {imagePreviews?.paragraph?.[index] && (
-                    <img
-                      src={imagePreviews?.paragraph?.[index]}
-                      alt={`Paragraph ${index + 1} Preview`}
-                      style={{ maxWidth: "100px", maxHeight: "100px" }}
+                  <div>
+                    <input
+                      type="file"
+                      name="image"
+                      onChange={(e) =>
+                        handleChange(e, index, "questionTextAndImages")
+                      }
                     />
-                  )}
+                    {imagePreviews?.paragraph?.[index] && (
+                      <img
+                        src={imagePreviews?.paragraph?.[index]}
+                        alt={`Paragraph ${index + 1} Preview`}
+                        style={{ maxWidth: "100px", maxHeight: "100px" }}
+                      />
+                    )}
+                    {item.image && (
+                      <button
+                        type="button"
+                        class="btn btn-danger m-2"
+                        onClick={() =>
+                          handleDeleteImage(
+                            item.image,
+                            index,
+                            null,
+                            "paragraph"
+                          )
+                        }
+                      >
+                        Delete Image
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      class="btn btn-danger m-2"
+                      onClick={() => handleDeleteParagraph(index)}
+                    >
+                      Delete Paragraph
+                    </button>
+                  </div>
                 </div>
               ))}
               <button
@@ -537,26 +620,53 @@ const QuestionForm = () => {
                           )
                         }
                       ></textarea>
-                      <input
-                        type="file"
-                        name="image"
-                        onChange={(e) =>
-                          handleChange(
-                            e,
-                            index,
-                            "subQuestions",
-                            "questionTextAndImages",
-                            idx
-                          )
-                        }
-                      />
-                      {imagePreviews?.questionTextAndImages?.[idx] && (
-                        <img
-                          src={imagePreviews?.questionTextAndImages?.[idx]}
-                          alt={`questionTextAndImages ${idx + 1} Preview`}
-                          style={{ maxWidth: "100px", maxHeight: "100px" }}
+                      <div>
+                        <input
+                          type="file"
+                          name="image"
+                          onChange={(e) =>
+                            handleChange(
+                              e,
+                              index,
+                              "subQuestions",
+                              "questionTextAndImages",
+                              idx
+                            )
+                          }
                         />
-                      )}
+                        {imagePreviews?.questionTextAndImages?.[idx] && (
+                          <img
+                            src={imagePreviews?.questionTextAndImages?.[idx]}
+                            alt={`questionTextAndImages ${idx + 1} Preview`}
+                            style={{ maxWidth: "100px", maxHeight: "100px" }}
+                          />
+                        )}
+                        {item.image && (
+                          <button
+                            type="button"
+                            class="btn btn-danger m-2"
+                            onClick={() =>
+                              handleDeleteImage(
+                                item.image,
+                                index,
+                                idx,
+                                "questionTextAndImages"
+                              )
+                            }
+                          >
+                            Delete Image
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          class="btn btn-danger m-2"
+                          onClick={() =>
+                            handleDeleteQuestionTextandImages(index, idx)
+                          }
+                        >
+                          Delete Question
+                        </button>
+                      </div>
                     </div>
                   ))}
                   <button
@@ -584,20 +694,51 @@ const QuestionForm = () => {
                           handleChange(e, index, "subQuestions", "options", idx)
                         }
                       />
-                      <input
-                        type="file"
-                        name="image"
-                        onChange={(e) =>
-                          handleChange(e, index, "subQuestions", "options", idx)
-                        }
-                      />
-                      {imagePreviews?.options?.[idx] && (
-                        <img
-                          src={imagePreviews?.options?.[idx]}
-                          alt={`option ${idx + 1} Preview`}
-                          style={{ maxWidth: "100px", maxHeight: "100px" }}
+                      <div>
+                        <input
+                          type="file"
+                          name="image"
+                          onChange={(e) =>
+                            handleChange(
+                              e,
+                              index,
+                              "subQuestions",
+                              "options",
+                              idx
+                            )
+                          }
                         />
-                      )}
+                        {imagePreviews?.options?.[idx] && (
+                          <img
+                            src={imagePreviews?.options?.[idx]}
+                            alt={`option ${idx + 1} Preview`}
+                            style={{ maxWidth: "100px", maxHeight: "100px" }}
+                          />
+                        )}
+                        {item.image && (
+                          <button
+                            type="button"
+                            class="btn btn-danger m-2"
+                            onClick={() =>
+                              handleDeleteImage(
+                                item.image,
+                                index,
+                                idx,
+                                "options"
+                              )
+                            }
+                          >
+                            Delete Image
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          class="btn btn-danger m-2"
+                          onClick={() => handleDeleteOption(index, idx)}
+                        >
+                          Delete Option
+                        </button>
+                      </div>
                     </div>
                   ))}
                   <button
@@ -631,26 +772,51 @@ const QuestionForm = () => {
                           )
                         }
                       ></textarea>
-                      <input
-                        type="file"
-                        name="image"
-                        onChange={(e) =>
-                          handleChange(
-                            e,
-                            index,
-                            "subQuestions",
-                            "explanation",
-                            idx
-                          )
-                        }
-                      />
-                      {imagePreviews?.explanation?.[idx] && (
-                        <img
-                          src={imagePreviews?.explanation?.[idx]}
-                          alt={`Explanation ${idx + 1} Preview`}
-                          style={{ maxWidth: "100px", maxHeight: "100px" }}
+                      <div>
+                        <input
+                          type="file"
+                          name="image"
+                          onChange={(e) =>
+                            handleChange(
+                              e,
+                              index,
+                              "subQuestions",
+                              "explanation",
+                              idx
+                            )
+                          }
                         />
-                      )}
+                        {imagePreviews?.explanation?.[idx] && (
+                          <img
+                            src={imagePreviews?.explanation?.[idx]}
+                            alt={`Explanation ${idx + 1} Preview`}
+                            style={{ maxWidth: "100px", maxHeight: "100px" }}
+                          />
+                        )}
+                        {item.image && (
+                          <button
+                            type="button"
+                            class="btn btn-danger m-2"
+                            onClick={() =>
+                              handleDeleteImage(
+                                item.image,
+                                index,
+                                idx,
+                                "explanation"
+                              )
+                            }
+                          >
+                            Delete Image
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          class="btn btn-danger"
+                          onClick={() => handleDeleteExplanation(index, idx)}
+                        >
+                          Delete Explanation
+                        </button>
+                      </div>
                     </div>
                   ))}
                   <button
