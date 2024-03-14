@@ -46,6 +46,12 @@ const QuestionForm = () => {
       },
     ],
   });
+  const [imagePreviews, setImagePreviews] = useState({
+    paragraph: [],
+    questionTextAndImages: [],
+    options: [],
+    explanation: [],
+  });
 
   const handleChange = (e, index, fieldName, subFieldName, subIndex) => {
     const { name, value, files } = e.target;
@@ -58,8 +64,25 @@ const QuestionForm = () => {
         subFieldName === "explanation"
       ) {
         if (name === "image") {
-          newFormData[fieldName][index][subFieldName][subIndex][name] =
-            files[0];
+          const reader = new FileReader();
+          const file = files[0];
+
+          reader.onloadend = () => {
+            const newImagePreviews = { ...imagePreviews };
+
+            // Update image preview based on subFieldName and subIndex
+            newImagePreviews[subFieldName][subIndex] = reader.result;
+
+            // Update state with new image previews
+            setImagePreviews(newImagePreviews);
+
+            // Update form data with file object
+            newFormData[fieldName][index][subFieldName][subIndex][name] = file;
+          };
+
+          if (file) {
+            reader.readAsDataURL(file);
+          }
         } else {
           newFormData[fieldName][index][subFieldName][subIndex][name] = value;
         }
@@ -68,7 +91,22 @@ const QuestionForm = () => {
       }
     } else if (fieldName === "questionTextAndImages") {
       if (name === "image") {
-        newFormData[fieldName][index][name] = files[0];
+        const reader = new FileReader();
+        const file = files[0];
+
+        reader.onloadend = () => {
+          setImagePreviews((prevState) => ({
+            ...prevState,
+            paragraph: [...prevState.paragraph, reader.result],
+          }));
+
+          // Update form data with file object
+          newFormData[fieldName][index][name] = file;
+        };
+
+        if (file) {
+          reader.readAsDataURL(file);
+        }
       } else {
         newFormData[fieldName][index][name] = value;
       }
@@ -376,6 +414,13 @@ const QuestionForm = () => {
                       handleChange(e, index, "questionTextAndImages")
                     }
                   />
+                  {imagePreviews?.paragraph?.[index] && (
+                    <img
+                      src={imagePreviews?.paragraph?.[index]}
+                      alt={`Paragraph ${index + 1} Preview`}
+                      style={{ maxWidth: "100px", maxHeight: "100px" }}
+                    />
+                  )}
                 </div>
               ))}
               <button
@@ -505,6 +550,13 @@ const QuestionForm = () => {
                           )
                         }
                       />
+                      {imagePreviews?.questionTextAndImages?.[idx] && (
+                        <img
+                          src={imagePreviews?.questionTextAndImages?.[idx]}
+                          alt={`questionTextAndImages ${idx + 1} Preview`}
+                          style={{ maxWidth: "100px", maxHeight: "100px" }}
+                        />
+                      )}
                     </div>
                   ))}
                   <button
@@ -539,6 +591,13 @@ const QuestionForm = () => {
                           handleChange(e, index, "subQuestions", "options", idx)
                         }
                       />
+                      {imagePreviews?.options?.[idx] && (
+                        <img
+                          src={imagePreviews?.options?.[idx]}
+                          alt={`option ${idx + 1} Preview`}
+                          style={{ maxWidth: "100px", maxHeight: "100px" }}
+                        />
+                      )}
                     </div>
                   ))}
                   <button
@@ -585,6 +644,13 @@ const QuestionForm = () => {
                           )
                         }
                       />
+                      {imagePreviews?.explanation?.[idx] && (
+                        <img
+                          src={imagePreviews?.explanation?.[idx]}
+                          alt={`Explanation ${idx + 1} Preview`}
+                          style={{ maxWidth: "100px", maxHeight: "100px" }}
+                        />
+                      )}
                     </div>
                   ))}
                   <button

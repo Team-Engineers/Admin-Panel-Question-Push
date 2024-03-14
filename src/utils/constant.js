@@ -127,6 +127,14 @@ export const subdivision = [
   {
     name: "General English",
     children: [
+      {
+        name: "Mock Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
+        name: "Practice Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
       { name: "Spot the Error" },
       { name: "Sentence Correction" },
       { name: "Fill in the Blanks Single" },
@@ -146,6 +154,14 @@ export const subdivision = [
   {
     name: "Accountancy",
     children: [
+      {
+        name: "Mock Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
+        name: "Practice Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
       {
         name: "Accounting for parternship firms fundamental",
       },
@@ -197,6 +213,14 @@ export const subdivision = [
     name: "Economics",
     children: [
       {
+        name: "Mock Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
+        name: "Practice Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
         name: "Macro Economics > National Income and Real Aggregates",
       },
       {
@@ -247,6 +271,14 @@ export const subdivision = [
     name: "Business Studies",
     children: [
       {
+        name: "Mock Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
+        name: "Practice Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
         name: "Nature and significance of management",
       },
       {
@@ -291,6 +323,14 @@ export const subdivision = [
     name: "Physics",
     children: [
       {
+        name: "Mock Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
+        name: "Practice Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
         name: "1",
       },
       {
@@ -310,6 +350,14 @@ export const subdivision = [
   {
     name: "Chemistry",
     children: [
+      {
+        name: "Mock Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
+        name: "Practice Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
       {
         name: "1",
       },
@@ -332,6 +380,14 @@ export const subdivision = [
     name: "Biology",
     children: [
       {
+        name: "Mock Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
+        name: "Practice Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
         name: "1",
       },
       {
@@ -351,6 +407,14 @@ export const subdivision = [
   {
     name: "History",
     children: [
+      {
+        name: "Mock Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
+        name: "Practice Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
       {
         name: "1",
       },
@@ -372,6 +436,14 @@ export const subdivision = [
     name: "Political Science",
     children: [
       {
+        name: "Mock Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
+        name: "Practice Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
         name: "1",
       },
       {
@@ -391,6 +463,14 @@ export const subdivision = [
   {
     name: "Geography",
     children: [
+      {
+        name: "Mock Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
+        name: "Practice Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
       {
         name: "1",
       },
@@ -412,6 +492,14 @@ export const subdivision = [
     name: "Psychology",
     children: [
       {
+        name: "Mock Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
+        name: "Practice Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
         name: "1",
       },
       {
@@ -432,6 +520,14 @@ export const subdivision = [
   {
     name: "Sociology",
     children: [
+      {
+        name: "Mock Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
+      {
+        name: "Practice Test",
+        topics: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      },
       {
         name: "1",
       },
