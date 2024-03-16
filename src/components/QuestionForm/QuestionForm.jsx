@@ -14,6 +14,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import slugify from "slugify";
 import { API } from "../../utils/constant";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const QuestionForm = () => {
   const generalContext = useContext(GeneralContext);
@@ -192,9 +194,7 @@ const QuestionForm = () => {
         const addedNewQuestion = await newQuestion.json();
 
         if (addedNewQuestion.success) {
-          setTimeout(function() {
-            alert(addedNewQuestion.msg);
-          }, 1500);
+          toast.success(addedNewQuestion.msg);
         }
       })
       .catch((error) => console.log(error));
@@ -203,6 +203,7 @@ const QuestionForm = () => {
   return (
     // Version 2
     <div className="questionContainer">
+        <ToastContainer />
       {generalContext.mocktestId.length ? (
         <h2>Add New Question in {generalContext.mocktestName}</h2>
       ) : (
