@@ -192,8 +192,9 @@ const QuestionForm = () => {
         const addedNewQuestion = await newQuestion.json();
 
         if (addedNewQuestion.success) {
-          alert(addedNewQuestion.msg);
-          // window.location.reload();
+          setTimeout(function() {
+            alert(addedNewQuestion.msg);
+          }, 1500);
         }
       })
       .catch((error) => console.log(error));
