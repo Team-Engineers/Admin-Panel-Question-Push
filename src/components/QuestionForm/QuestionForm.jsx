@@ -144,11 +144,11 @@ const QuestionForm = () => {
 
       await uploadBytes(imageRef, obj.image)
         .then(() => {})
-        .catch((error) => alert(error));
+        .catch((error) => toast.error((error?.data?.msg)));
 
       await getDownloadURL(imageRef)
         .then((url) => (obj.image = url))
-        .catch((error) => alert(error));
+        .catch((error) => toast.error((error?.data?.msg)));
     }
   };
 

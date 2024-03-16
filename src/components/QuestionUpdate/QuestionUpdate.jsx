@@ -208,7 +208,7 @@ const QuestionUpdate = () => {
         obj.image = url;
         // console.log("Image uploaded and URL updated:", obj.image);
       } catch (error) {
-        alert(error);
+        toast.error((error?.data?.msg));
       }
     }
   };
