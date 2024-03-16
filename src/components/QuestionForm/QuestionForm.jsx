@@ -144,11 +144,11 @@ const QuestionForm = () => {
 
       await uploadBytes(imageRef, obj.image)
         .then(() => {})
-        .catch((error) => toast.error((error?.data?.msg)));
+        .catch((error) => toast.error(error?.data?.msg));
 
       await getDownloadURL(imageRef)
         .then((url) => (obj.image = url))
-        .catch((error) => toast.error((error?.data?.msg)));
+        .catch((error) => toast.error(error?.data?.msg));
     }
   };
 
@@ -168,7 +168,23 @@ const QuestionForm = () => {
     // const updatedEntranceExam = entranceExamNames;
     // const updatedFormData = generalContext.mocktestId.length ? {...formData , entranceExam : updatedEntranceExam , mocktestId : generalContext.mocktestId} : {...formData , entranceExam : updatedEntranceExam };
     // console.log(updatedFormData);
+    if (!formData.subject) {
+      return toast.error("Subject is required");
+    }
+    if (!formData.topic) {
+      return toast.error("Topic is required");
+    }
 
+
+    formData?.subQuestions.forEach((item, index) => {
+      if (!item.correctOptionIndex) {
+        return toast.error("Correct option is missing");
+      }
+    });
+
+    if (!formData.topic) {
+      return toast.error("Topic is required");
+    }
     const anArray = handleAllFilesUpload();
 
     await Promise.all(anArray.map(handleImageUpload))
@@ -203,7 +219,7 @@ const QuestionForm = () => {
   return (
     // Version 2
     <div className="questionContainer">
-        <ToastContainer />
+      <ToastContainer />
       {generalContext.mocktestId.length ? (
         <h2>Add New Question in {generalContext.mocktestName}</h2>
       ) : (
@@ -229,7 +245,10 @@ const QuestionForm = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="questionForm">
-        <div id="question-details" className="flex-wrap justify-content-start gap-2">
+        <div
+          id="question-details"
+          className="flex-wrap justify-content-start gap-2"
+        >
           <div className="input-form ">
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Subject</InputLabel>
