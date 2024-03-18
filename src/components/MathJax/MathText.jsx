@@ -34,7 +34,7 @@ export const MathText = ({ text, textTag = "p" }) => {
             return <span key={`${index}_${subIndex}`}>{subpart}</span>;
           }
         })
-        .concat(<br key={`br_${index}`} className="minimal-space d-none" />);
+        .concat(<br key={`br_${index}`} className="minimal-space" />);
     } else if (hasHTMLTags) {
       return [
         <TextTag
@@ -42,12 +42,12 @@ export const MathText = ({ text, textTag = "p" }) => {
           className="text-spacing"
           dangerouslySetInnerHTML={{ __html: part }}
         />,
-        <br key={`br_${index}`} className="minimal-space d-none" />,
+        <br key={`br_${index}`} className="minimal-space " />,
       ];
     } else {
       return [
         <span key={index}>{part}</span>,
-        <br key={`br_${index}`} className="minimal-space d-none" />,
+        <br key={`br_${index}`} className="minimal-space" />,
       ];
     }
   });
