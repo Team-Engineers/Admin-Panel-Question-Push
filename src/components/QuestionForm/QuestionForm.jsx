@@ -16,8 +16,11 @@ import slugify from "slugify";
 import { API } from "../../utils/constant";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { TextField } from "@mui/material";
 
 const QuestionForm = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const generalContext = useContext(GeneralContext);
 
   const [entranceExamNames, setEntranceExamNames] = useState([]);
@@ -47,6 +50,8 @@ const QuestionForm = () => {
         negativeMarks: "",
       },
     ],
+    source: "",
+    createdBy: user.name,
   });
 
   const handleChange = (e, index, fieldName, subFieldName, subIndex) => {
@@ -165,6 +170,7 @@ const QuestionForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("formdata value", formData);
     // const updatedEntranceExam = entranceExamNames;
     // const updatedFormData = generalContext.mocktestId.length ? {...formData , entranceExam : updatedEntranceExam , mocktestId : generalContext.mocktestId} : {...formData , entranceExam : updatedEntranceExam };
     // console.log(updatedFormData);
@@ -175,7 +181,6 @@ const QuestionForm = () => {
       return toast.error("Topic is required");
     }
 
-
     formData?.subQuestions.forEach((item, index) => {
       if (!item.correctOptionIndex) {
         return toast.error("Correct option is missing");
@@ -184,6 +189,9 @@ const QuestionForm = () => {
 
     if (!formData.topic) {
       return toast.error("Topic is required");
+    }
+    if (!formData.source) {
+      return toast.error("Source is required");
     }
     const anArray = handleAllFilesUpload();
 
@@ -325,6 +333,27 @@ const QuestionForm = () => {
                   </MenuItem>
                 ))}
               </Select>
+            </FormControl>
+          </div>
+          <div className="input-form">
+            <FormControl fullWidth>
+              <TextField
+                id="created-by"
+                label="Created By"
+                value={user.name}
+                variant="outlined"
+                disabled
+              />
+            </FormControl>
+          </div>
+          <div className="input-form">
+            <FormControl fullWidth>
+              <TextField
+                id="source"
+                onChange={(e) => handleChange(e, null, "source")}
+                label="Source"
+                variant="outlined"
+              />
             </FormControl>
           </div>
         </div>

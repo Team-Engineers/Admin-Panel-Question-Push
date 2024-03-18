@@ -10,7 +10,7 @@ import {
 } from "firebase/storage";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import { Modal, Box, Typography, Button } from "@mui/material";
+import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Select from "@mui/material/Select";
@@ -52,6 +52,8 @@ const QuestionUpdate = () => {
         negativeMarks: "",
       },
     ],
+    createdBy: "",
+    source: "",
   });
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -208,7 +210,7 @@ const QuestionUpdate = () => {
         obj.image = url;
         // console.log("Image uploaded and URL updated:", obj.image);
       } catch (error) {
-        toast.error((error?.data?.msg));
+        toast.error(error?.data?.msg);
       }
     }
   };
@@ -497,6 +499,28 @@ const QuestionUpdate = () => {
                   </MenuItem>
                 ))}
               </Select>
+            </FormControl>
+          </div>
+          <div className="input-form">
+            <FormControl fullWidth>
+              <TextField
+                id="created-by"
+                label="Created By"
+                value={formData.name}
+                variant="outlined"
+                disabled
+              />
+            </FormControl>
+          </div>
+          <div className="input-form">
+            <FormControl fullWidth>
+              <TextField
+                id="source"
+                value = {formData.source}
+                onChange={(e) => handleChange(e, null, "source")}
+                label="Source"
+                variant="outlined"
+              />
             </FormControl>
           </div>
         </div>
