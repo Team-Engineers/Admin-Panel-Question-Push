@@ -347,13 +347,20 @@ const QuestionForm = () => {
             </FormControl>
           </div>
           <div className="input-form">
-            <FormControl fullWidth>
-              <TextField
+            <FormControl fullWidth variant="outlined">
+              <InputLabel id="source-label">Source</InputLabel>
+              <Select
+                labelId="source-label"
                 id="source"
+                value={formData.source}
                 onChange={(e) => handleChange(e, null, "source")}
                 label="Source"
-                variant="outlined"
-              />
+              >
+                {/* <MenuItem value="">Select Source</MenuItem> */}
+                <MenuItem value="adda247">Adda 247</MenuItem>
+                <MenuItem value="ncert">NCERT</MenuItem>
+                <MenuItem value="career360">Career 360</MenuItem>
+              </Select>
             </FormControl>
           </div>
         </div>

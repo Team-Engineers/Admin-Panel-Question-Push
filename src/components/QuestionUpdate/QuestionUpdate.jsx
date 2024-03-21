@@ -130,7 +130,7 @@ const QuestionUpdate = () => {
     } else {
       newFormData[fieldName] = value;
     }
-
+    // console.log("noew form data",newFormData)
     setFormData(newFormData);
   };
 
@@ -512,7 +512,7 @@ const QuestionUpdate = () => {
               />
             </FormControl>
           </div>
-          <div className="input-form">
+          {/* <div className="input-form">
             <FormControl fullWidth>
               <TextField
                 id="source"
@@ -521,6 +521,23 @@ const QuestionUpdate = () => {
                 label="Source"
                 variant="outlined"
               />
+            </FormControl>
+          </div> */}
+          <div className="input-form">
+            <FormControl fullWidth variant="outlined">
+              <InputLabel id="source-label">Source</InputLabel>
+              <Select
+                labelId="source-label"
+                id="source"
+                value={formData.source}
+                onChange={(e) => handleChange(e, null, "source")}
+                label="Source"
+              >
+                {/* <MenuItem value="">Select Source</MenuItem> */}
+                <MenuItem value="adda247">Adda 247</MenuItem>
+                <MenuItem value="ncert">NCERT</MenuItem>
+                <MenuItem value="career360">Career 360</MenuItem>
+              </Select>
             </FormControl>
           </div>
         </div>
