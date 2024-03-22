@@ -1,6 +1,5 @@
 import React from "react";
 import { MathComponent } from "mathjax-react";
-
 export const MathText = ({ text, textTag = "p" }) => {
   const TextTag = textTag || "p";
 
@@ -34,7 +33,7 @@ export const MathText = ({ text, textTag = "p" }) => {
             return <span key={`${index}_${subIndex}`}>{subpart}</span>;
           }
         })
-        .concat(<br key={`br_${index}`} className="minimal-space" />);
+        .concat(<div key={`br_${index}`} className="minimal-space" />);
     } else if (hasHTMLTags) {
       return [
         <TextTag
@@ -42,12 +41,12 @@ export const MathText = ({ text, textTag = "p" }) => {
           className="text-spacing"
           dangerouslySetInnerHTML={{ __html: part }}
         />,
-        <br key={`br_${index}`} className="minimal-space " />,
+        <div key={`br_${index}`} className="minimal-space " />,
       ];
     } else {
       return [
         <span key={index}>{part}</span>,
-        <br key={`br_${index}`} className="minimal-space" />,
+        <div key={`br_${index}`} className="minimal-space" />,
       ];
     }
   });
