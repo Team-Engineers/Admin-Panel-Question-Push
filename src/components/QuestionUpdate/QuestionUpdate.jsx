@@ -505,8 +505,8 @@ const QuestionUpdate = () => {
             <FormControl fullWidth>
               <TextField
                 id="created-by"
-                label="Created By"
-                value={formData.name}
+                // label="Created By"
+                value={formData.createdBy}
                 variant="outlined"
                 disabled
               />
