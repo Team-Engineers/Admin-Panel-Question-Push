@@ -26,7 +26,7 @@ export const MathText = ({ text, textTag = "p" }) => {
                 key={`${index}_${subIndex}`}
                 tex={subpart}
                 display={false}
-                className="math-expression"
+                className="text-spacing math-expression"
               />
             );
           } else {
@@ -38,14 +38,16 @@ export const MathText = ({ text, textTag = "p" }) => {
       return [
         <TextTag
           key={`html_${index}`}
-          className="text-spacing"
+          className="text-spacing html-text"
           dangerouslySetInnerHTML={{ __html: part }}
         />,
         <div key={`br_${index}`} className="minimal-space " />,
       ];
     } else {
       return [
-        <span key={index}>{part}</span>,
+        <span className="normal text " key={index}>
+          {part}
+        </span>,
         <div key={`br_${index}`} className="minimal-space" />,
       ];
     }
