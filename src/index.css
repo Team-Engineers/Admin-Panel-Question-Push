@@ -19,5 +19,6 @@ ul li:hover {
 }
 
 .minimal-space{
-  margin : 5px 0px;
+  height : 3px;
+  width: 100%;
 }
