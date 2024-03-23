@@ -17,3 +17,7 @@ ul li:hover {
   text-decoration: underline;
   transition: ease-in;
 }
+
+.minimal-space{
+  margin : 5px 0px;
+}
