@@ -361,6 +361,8 @@ const QuestionForm = () => {
                 <MenuItem value="ncert">NCERT</MenuItem>
                 <MenuItem value="career360">Career 360</MenuItem>
                 <MenuItem value="own">Own Crafted</MenuItem>
+                <MenuItem value="mtg">MTG</MenuItem>
+                <MenuItem value="oswaalbooks">Oswaal Books</MenuItem>
               </Select>
             </FormControl>
           </div>
